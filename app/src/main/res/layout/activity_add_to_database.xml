@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#08004e32"
+    android:orientation="vertical"
+    tools:context=".modules_.add_cat.AddToDatabaseActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleClick"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/bold"
+            android:text="Create Datagory"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_17sp" />
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:fontFamily="@font/bold"
+            android:clickable="true"
+            android:onClick="handleSave"
+            android:paddingRight="@dimen/margin_10dp"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_17sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:paddingLeft="5dp"
+                android:paddingTop="@dimen/margin_10dp"
+                android:paddingBottom="5dp"
+                android:text="Category Name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_17sp" />
+
+            <View
+                android:layout_width="35dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <EditText
+                android:id="@+id/cat_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/edit_bg"
+                android:ellipsize="end"
+                android:hint="Add category name here"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:padding="@dimen/margin_10dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_17sp" />
+
+            <LinearLayout
+                android:id="@+id/parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/add_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:background="@drawable/btn_bg"
+                android:drawableLeft="@drawable/ic_add_circle_outline_black_24dp"
+                android:drawablePadding="@dimen/margin_10dp"
+                android:fontFamily="@font/bold"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_20dp"
+                android:paddingTop="@dimen/margin_10dp"
+                android:paddingRight="@dimen/margin_20dp"
+                android:paddingBottom="@dimen/margin_10dp"
+                android:text="Add Field"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
