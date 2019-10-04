@@ -31,4 +31,10 @@
     <string name="pass">Password</string>
     <string name="remarks">Remarks</string>
     <string name="manage_categories">Manage Categories</string>
+    <string name="note_master_password_is_a_unique_password_and_will_be_used_to_edit_or_remove_saved_details_please_remember_it_otherwise_you_would_not_be_able_to_access_details">Note: Master password is a unique password and will be used to edit or remove saved details. Please remember it otherwise you would not be able to access details.</string>
+    <string name="enter_master_password">Enter master password.</string>
+    <string name="save_master_password">Save master Password</string>
+    <string name="reset_master_password">Reset master password</string>
+    <string name="enter_old">Enter old password.</string>
+    <string name="enter_pass">Enter new password.</string>
 </resources>

@@ -14,9 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.HomeScreen.CatM;
-import simar.com.easykey.modules_.add_module_.AddOther;
-import simar.com.easykey.modules_.add_module_.AddPassword;
-import simar.com.easykey.modules_.add_module_.AddWifiPassword;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
@@ -47,23 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     private void handleClick(CatM m) {
 
-        switch (m.getId()){
-            case "1":
-                goForNextActivity(AddPassword.class,m);
-                break;
-            case "2":
-                goForNextActivity(AddPassword.class,m);
-                break;
-            case "3":
-                goForNextActivity(AddWifiPassword.class,m);
-                break;
-            case "4":
-                goForNextActivity(AddOther.class,m);
-                break;
-                default:
-                    goForNextActivity(AddPassword.class,m);
-                    break;
-        }
+
 
 
     }

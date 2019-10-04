@@ -15,9 +15,6 @@ import java.util.List;
 
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.HomeScreen.CatM;
-import simar.com.easykey.modules_.add_module_.AddPassword;
-import simar.com.easykey.modules_.add_module_.AddWifiPassword;
-import simar.com.easykey.modules_.add_module_.AddOther;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> {
 
@@ -48,23 +45,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
 
     private void handleClick(CatM m) {
 
-        switch (m.getId()){
-            case "1":
-                goForNextActivity(AddPassword.class,m);
-                break;
-            case "2":
-                goForNextActivity(AddPassword.class,m);
-                break;
-            case "3":
-                goForNextActivity(AddWifiPassword.class,m);
-                break;
-            case "4":
-                goForNextActivity(AddOther.class,m);
-                break;
-                default:
-                    goForNextActivity(AddPassword.class,m);
-                    break;
-        }
 
 
     }

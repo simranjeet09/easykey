@@ -14,11 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+
 public class AddToDatabaseActivity extends AppCompatActivity {
 
     TextView add_new;
     LinearLayout parent;
     EditText cat_title;
+    ArrayList<EditText>allFields= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,8 @@ public class AddToDatabaseActivity extends AppCompatActivity {
         View viewMyLayout = inflater.inflate(R.layout.field_row, null);
         ImageView delete = viewMyLayout.findViewById(R.id.delete_row);
         EditText field = viewMyLayout.findViewById(R.id.field);
-        delete.setTag(viewMyLayout);
+
+        delete.setTag(field);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +73,7 @@ public class AddToDatabaseActivity extends AppCompatActivity {
             }
         });
 
-        parent.addView(viewMyLayout);
+        parent.addView(field);
         field.requestFocus();
     }
 

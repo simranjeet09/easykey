@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green_app"
+        android:text="@string/enter_master_password"
+        android:gravity="center"
+        android:textSize="@dimen/textsize_title"
+        android:fontFamily="@font/bold"
+        android:layout_marginBottom="@dimen/margin_10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:text="@string/note_master_password_is_a_unique_password_and_will_be_used_to_edit_or_remove_saved_details_please_remember_it_otherwise_you_would_not_be_able_to_access_details"
+        android:gravity="center"
+        android:textSize="@dimen/textsize_11sp"
+        android:fontFamily="@font/light"
+        android:layout_marginBottom="@dimen/margin_10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_bg"
+        android:id="@+id/enter_pass"
+        android:hint="Enter master password"
+        android:padding="@dimen/margin_10dp" />
+
+    <EditText
+        android:id="@+id/confirm_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@drawable/edit_bg"
+        android:hint="Enter new master password"
+        android:padding="@dimen/margin_10dp" />
+
+    <TextView
+        android:id="@+id/setpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_20dp"
+        android:layout_marginBottom="@dimen/margin_20dp"
+        android:background="@drawable/btn_bg"
+        android:drawablePadding="@dimen/margin_10dp"
+        android:fontFamily="@font/bold"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_10dp"
+        android:paddingRight="@dimen/margin_20dp"
+        android:paddingBottom="@dimen/margin_10dp"
+        android:text="@string/save_master_password"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

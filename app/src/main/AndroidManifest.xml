@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="simar.com.easykey">
 
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".modules_.master_pass.MasterPasswordActivity"
+            android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".modules_.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,12 +25,14 @@
             android:name=".modules_.HomeScreen.AppHomeNavigation"
             android:label=""
             android:theme="@style/AppTheme" />
-        <activity android:name=".modules_.add_module_.AddPassword" />
         <activity android:name=".modules_.add_module_.SelectCategories" />
-        <activity android:name=".modules_.add_module_.AddWifiPassword" />
-        <activity android:name=".modules_.add_module_.AddOther" />
         <activity android:name=".modules_.add_cat.AddCatActivity" />
-        <activity android:name=".modules_.add_cat.AddToDatabaseActivity"></activity>
+        <activity android:name=".modules_.add_cat.AddToDatabaseActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
 </manifest>

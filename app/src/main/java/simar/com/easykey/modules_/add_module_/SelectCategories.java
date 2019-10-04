@@ -25,10 +25,7 @@ public class SelectCategories extends BaseActivity {
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         List<CatM> data= new ArrayList<>();
-        data.add(new CatM("1","Email"));
-        data.add(new CatM("2","Social Network"));
-        data.add(new CatM("3","Wifi Password"));
-        data.add(new CatM("4","Other"));
+
 
         CategoryAdapter categoryAdapter = new CategoryAdapter(this,data);
         rv.setAdapter(categoryAdapter);
