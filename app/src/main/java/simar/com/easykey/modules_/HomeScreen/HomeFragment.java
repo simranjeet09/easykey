@@ -50,10 +50,7 @@ public class HomeFragment extends Fragment {
         add_new = vvv.findViewById(R.id.add_new);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         List<CatM> data = new ArrayList<>();
-        data.add(new CatM("1", "Title 1"));
-        data.add(new CatM("2", "Title 2"));
-        data.add(new CatM("3", "Title 3"));
-        data.add(new CatM("4", "Title 4"));
+
 
         DataAdapter categoryAdapter = new DataAdapter(getActivity(), data);
         rv.setAdapter(categoryAdapter);

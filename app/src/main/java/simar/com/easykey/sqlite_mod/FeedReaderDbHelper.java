@@ -97,8 +97,9 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         long id = db.insert(tbl_suffix + FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
         Log.e("id", id + "=");
 
-
     }
+
+
 
     public void showDataFromDb() {
         try {
