@@ -3,12 +3,12 @@ package simar.com.easykey.modules_.HomeScreen;
 public class CatM {
 
     String id;
-    String name;
+    String tbl_name;
     String lbl;
 
-    public CatM(String id, String name,String lbl) {
+    public CatM(String id, String tbl_name,String lbl) {
         this.id = id;
-        this.name = name;
+        this.tbl_name = tbl_name;
         this.lbl= lbl;
     }
 
@@ -21,11 +21,11 @@ public class CatM {
     }
 
     public String getName() {
-        return name;
+        return tbl_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.tbl_name = name;
     }
 
     public String getLbl() {

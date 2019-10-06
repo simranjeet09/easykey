@@ -3,6 +3,9 @@ package simar.com.easykey.modules_.add_cat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import simar.com.easykey.R;
+import simar.com.easykey.modules_.BaseActivity;
+import simar.com.easykey.modules_.HomeScreen.AppHomeNavigation;
+import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,7 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class AddToDatabaseActivity extends AppCompatActivity {
+public class AddToDatabaseActivity extends BaseActivity {
 
     TextView add_new;
     LinearLayout parent;
@@ -25,7 +28,7 @@ public class AddToDatabaseActivity extends AppCompatActivity {
     ArrayList<EditText>allFields= new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_database);
 
@@ -48,8 +51,7 @@ public class AddToDatabaseActivity extends AppCompatActivity {
         View viewMyLayout = inflater.inflate(R.layout.field_row, null);
         ImageView delete = viewMyLayout.findViewById(R.id.delete_row);
         EditText field = viewMyLayout.findViewById(R.id.field);
-
-        delete.setTag(field);
+        delete.setTag(viewMyLayout);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,14 +75,15 @@ public class AddToDatabaseActivity extends AppCompatActivity {
             }
         });
 
-        parent.addView(field);
+        parent.addView(viewMyLayout);
         field.requestFocus();
     }
 
     public void handleSave(View view) {
 
-        Toast.makeText(AddToDatabaseActivity.this, "Data will be saved on this action.", Toast.LENGTH_SHORT).show();
-        finish();
+
+        //addNewCat("",getSessionInstance().getMasterPassword(),cat_title.getText().toString());
+        goToNext(AppHomeNavigation.class);
 
     }
 }

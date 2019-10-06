@@ -4,14 +4,14 @@
     package="simar.com.easykey">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".modules_.master_pass.MasterPasswordActivity"
-            android:theme="@android:style/Theme.Dialog"/>
+           />
         <activity android:name=".modules_.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,7 @@
         <activity android:name=".modules_.add_module_.SelectCategories" />
         <activity android:name=".modules_.add_cat.AddCatActivity" />
         <activity android:name=".modules_.add_cat.AddToDatabaseActivity" />
+        <activity android:name=".sqlite_mod.AndroidDatabaseManager" />
     </application>
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />

@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.widget.Toast;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -19,6 +22,13 @@ import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 public class BaseActivity extends AppCompatActivity {
     public Context context = this;
     AppSession appSession;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        appSession = new AppSession(context);
+    }
 
     @Override
     protected void onResume() {
@@ -55,14 +65,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public AppSession getSessionInstance() {
-        if (appSession != null) {
-            appSession = new AppSession(context);
-        }
+       // if (appSession != null) {
+
+       // }
         return appSession;
     }
 
-
-    public void resetMasterPass(String old_pass, String pass) {
+/*    public void resetMasterPass(String old_pass, String pass) {
 
         FeedReaderDbHelper feedReaderDbHelper =getDbInstance();
         feedReaderDbHelper.rekey(old_pass, pass);
@@ -81,6 +90,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void addNewCat(String fields,String masterpass,String tbl_name){
         getDbInstance().createNewTable(fields,tbl_name,masterpass);
-    }
+    }*/
 
 }

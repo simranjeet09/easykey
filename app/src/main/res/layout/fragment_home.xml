@@ -26,6 +26,7 @@
         android:background="@drawable/btn_bg"
         android:drawableLeft="@drawable/vault"
         android:drawablePadding="@dimen/margin_10dp"
+        android:visibility="gone"
         android:fontFamily="@font/bold"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/margin_20dp"

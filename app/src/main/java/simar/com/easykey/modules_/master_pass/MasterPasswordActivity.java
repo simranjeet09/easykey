@@ -17,45 +17,27 @@ import net.sqlcipher.database.SQLiteDatabase;
 public class MasterPasswordActivity extends BaseActivity {
 TextView setpass;
 EditText pass;
-EditText confirm_pass;
+
      @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.master_pass_layout);
         SQLiteDatabase.loadLibs(this);
         setpass=findViewById(R.id.setpass);
         pass=findViewById(R.id.enter_pass);
-        confirm_pass=findViewById(R.id.confirm_pass);
 
-         if (getSessionInstance().getMasterPassword().equals("0")){
-            pass.setHint(getResources().getString(R.string.enter_pass));
-         }else {
-             pass.setText(getResources().getString(R.string.enter_old));
-         }
+
 
         setpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (getSessionInstance().getMasterPassword().equals("0")){
-
-                    if (!pass.getText().toString().equals(confirm_pass.getText().toString())){
-                        Toast.makeText(context, "Password not matched.", Toast.LENGTH_SHORT).show();
-                    }else {
-                        resetMasterPass("",confirm_pass.getText().toString());
-                    }
+                if (pass.getText().toString().length()<6){
+                    Toast.makeText(context, "Please enter a strong master password", Toast.LENGTH_SHORT).show();
                 }else {
-
-                    if (!pass.getText().toString().equals(getSessionInstance().getMasterPassword())){
-                        Toast.makeText(context, "Old password not matched", Toast.LENGTH_SHORT).show();
-                    }else {
-                        resetMasterPass(pass.getText().toString(),confirm_pass.getText().toString());
-                    }
+                 /*   FeedReaderDbHelper helper=new FeedReaderDbHelper(context);
+                    helper.rekey1(pass.getText().toString());
+                    getSessionInstance().setMasterPassword(pass.getText().toString());*/
                 }
-
-
-
-
 
             }
         });

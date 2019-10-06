@@ -46,6 +46,8 @@ import simar.com.easykey.lockmodule.fingerprint.FingerprintHandler;
 import simar.com.easykey.lockmodule.util.Animate;
 import simar.com.easykey.lockmodule.util.Utils;
 
+import static simar.com.easykey.modules_.AppSession.MyPREFERENCES;
+
 public class EnterPinActivity extends AppCompatActivity {
 
     public static final String TAG = "EnterPinActivity";
@@ -59,7 +61,7 @@ public class EnterPinActivity extends AppCompatActivity {
     private static final int PIN_LENGTH = 4;
     private static final String FINGER_PRINT_KEY = "FingerPrintKey";
 
-    private static final String PREFERENCES = "com.amirarcane.lockscreen";
+    private static final String PREFERENCES = "easy_key_simar.com.easykey";
     private static final String KEY_PIN = "pin";
 
     private PinLockView mPinLockView;

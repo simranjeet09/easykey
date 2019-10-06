@@ -16,21 +16,31 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.BaseActivity;
 import simar.com.easykey.modules_.add_cat.AddCatActivity;
+import simar.com.easykey.modules_.master_pass.MasterPasswordActivity;
+import simar.com.easykey.sqlite_mod.AndroidDatabaseManager;
 
 public class AppHomeNavigation extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_home_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToNext(AndroidDatabaseManager.class);
+            }
+        });
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.frame, new HomeFragment()).commit();
 
@@ -84,7 +94,8 @@ public class AppHomeNavigation extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.home) {
+        if (id == R.id.change_master) {
+            goToNext(MasterPasswordActivity.class);
             // Handle the camera action
         } else if (id == R.id.settings) {
             goToNext(AddCatActivity.class);

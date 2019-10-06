@@ -18,7 +18,7 @@ import java.util.List;
 public class SelectCategories extends BaseActivity {
     RecyclerView rv;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_categories);
         rv = findViewById(R.id.rv);

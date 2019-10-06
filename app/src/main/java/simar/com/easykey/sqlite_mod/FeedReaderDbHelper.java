@@ -6,30 +6,74 @@ import android.util.Log;
 import android.widget.Toast;
 
 import net.sqlcipher.Cursor;
+import net.sqlcipher.MatrixCursor;
+import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import simar.com.easykey.modules_.AppSession;
+import simar.com.easykey.modules_.HomeScreen.CatM;
 import simar.com.easykey.modules_.MainActivity;
 
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static FeedReaderDbHelper instance;
     public static final String tbl_suffix = "tbl_easy_key_";
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "FeedReader.db";
+    public static final String DATABASE_NAME = "EasyKey.db";
 
     private static final String TEXT_TYPE = " TEXT";
+
+
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.TABLE_NAME + " (" +
-                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "CREATE TABLE " + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME + TEXT_TYPE + "," +
+                    FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + TEXT_TYPE +
+                    " )";
+
+/*
+    private static final String SQL_CREATE_ENTRIES =
+                "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + " " + TEXT_TYPE + " ," +
-                    FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE + TEXT_TYPE + ")";
+                    FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME + TEXT_TYPE + ")";*/
+
+    private static final String SQL_CREATE_EMAIL_CAT =
+            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_CAT_ID + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_LINK + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE + TEXT_TYPE + ")";
+
+
+    private static final String SQL_CREATE_WIFI_CAT =
+            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.WIFI_TABLE_NAME + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_TITLE + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_CAT_ID + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_USERNAME + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_PASSWORD + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_IP + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_PORT + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_DNS + TEXT_TYPE + ")";
+
+    private static final String SQL_TABLE_COLOUMNS =
+            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    FeedReaderContract.FeedEntry.COLUMN_CAT_ID + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.TABLE_COLUMN_label + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + FeedReaderContract.FeedEntry.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME;
 
     public FeedReaderDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,6 +88,9 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_EMAIL_CAT);
+        db.execSQL(SQL_CREATE_WIFI_CAT);
+        db.execSQL(SQL_TABLE_COLOUMNS);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -51,17 +98,17 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
-    public void addTablesToDb() {
-
-        SQLiteDatabase db = this.getWritableDatabase("simar");
-        ContentValues values = new ContentValues();
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, "Easter Bunny has escaped!");
-
-        db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
-        Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.TABLE_NAME + "';", null);
-        Log.e("DATABASE", "Rows count: " + cursor.getCount());
-        cursor.close();
+/*
+    public void initAtFirst() {
+        SQLiteDatabase db = this.getWritableDatabase("easy_key");
+        ContentValues V1 = new ContentValues();
+        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix+"password");
+        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Password");
+        db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V1);
+        ContentValues V2 = new ContentValues();
+        V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix+"wifi");
+        V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "WIFI Details");
+        db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V2);
         db.close();
 
     }
@@ -74,7 +121,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                 FeedReaderContract.FeedEntry.COLUMN_CAT_ID + " " + TEXT_TYPE + " ," +
                 fields + ")";
         db.execSQL(sl);
-       insertNewCat(master_pass, table_name);
+        insertNewCat(master_pass, table_name);
 
         return true;
     }
@@ -91,20 +138,22 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             String s = match.group();
             temp_lbl = temp_lbl.replaceAll("//" + s, "");
         }
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, tbl_suffix + temp_lbl);
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, lbl);
-        values.put(FeedReaderContract.FeedEntry.TABLE_NAME, lbl);
-        long id = db.insert(tbl_suffix + FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix + temp_lbl);
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, lbl);
+        long id = db.insert(tbl_suffix + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, values);
         Log.e("id", id + "=");
+
 
     }
 
 
 
+
+
     public void showDataFromDb() {
         try {
-            SQLiteDatabase db = this.getWritableDatabase("somePass");
-            Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.TABLE_NAME + "';", null);
+            SQLiteDatabase db = this.getWritableDatabase("easy_key");
+            Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
             Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
 
             String dbValues = "";
@@ -131,4 +180,64 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void rekey1(String passphrase) {
+        SQLiteDatabase db = this.getWritableDatabase("");
+       db.execSQL("PRAGMA rekey=" + passphrase);
+        db.close();
+    }*/
+
+
+    public boolean doesNotExist(String name) {
+        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        String query = "SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "' WHERE " + FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + " ='" + name + "'";
+        Cursor cursor = db.rawQuery(query, new String[]{});
+        if (cursor.getCount() > 0) {
+            return false;
+        } else
+            return true;
+    }
+
+    public ArrayList<Cursor> getData(String Query) {
+        //get writable database
+        SQLiteDatabase sqlDB = this.getWritableDatabase("somePass");
+        String[] columns = new String[]{"message"};
+        //an array list of cursor to save two cursors one has results from the query
+        //other cursor stores error message if any errors are triggered
+        ArrayList<Cursor> alc = new ArrayList<Cursor>(2);
+        MatrixCursor Cursor2 = new MatrixCursor(columns);
+        alc.add(null);
+        alc.add(null);
+
+        try {
+            String maxQuery = Query;
+            //execute the query results will be save in Cursor c
+            Cursor c = sqlDB.rawQuery(maxQuery, null);
+
+            //add value to cursor2
+            Cursor2.addRow(new Object[]{"Success"});
+
+            alc.set(1, Cursor2);
+            if (null != c && c.getCount() > 0) {
+
+                alc.set(0, c);
+                c.moveToFirst();
+
+                return alc;
+            }
+            return alc;
+        } catch (SQLException sqlEx) {
+            Log.d("printing exception", sqlEx.getMessage());
+            //if any exceptions are triggered save the error message to cursor an return the arraylist
+            Cursor2.addRow(new Object[]{"" + sqlEx.getMessage()});
+            alc.set(1, Cursor2);
+            return alc;
+        } catch (Exception ex) {
+            Log.d("printing exception", ex.getMessage());
+
+            //if any exceptions are triggered save the error message to cursor an return the arraylist
+            Cursor2.addRow(new Object[]{"" + ex.getMessage()});
+            alc.set(1, Cursor2);
+            return alc;
+        }
+    }
 }

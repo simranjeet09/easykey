@@ -38,7 +38,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder h, int pos) {
-        h.name.setText(dataList.get(pos).getName());
+        h.name.setText(dataList.get(pos).getLbl());
         h.itemView.setOnClickListener(v ->handleClick(dataList.get(pos)));
 
     }
