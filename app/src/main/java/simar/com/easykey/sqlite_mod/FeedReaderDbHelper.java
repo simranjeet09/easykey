@@ -1,9 +1,7 @@
 package simar.com.easykey.sqlite_mod;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.MatrixCursor;
@@ -11,14 +9,9 @@ import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import simar.com.easykey.modules_.AppSession;
-import simar.com.easykey.modules_.HomeScreen.CatM;
-import simar.com.easykey.modules_.MainActivity;
+import simar.com.easykey.modules_.view_forms.FormModel;
 
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static FeedReaderDbHelper instance;
@@ -242,6 +235,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
     public String[] getColumnNames(String tabelName) {
+        Log.e("tb;_name",tabelName);
         SQLiteDatabase sqlDB = this.getWritableDatabase("somePass");
         Cursor dbCursor = sqlDB.query(tabelName, null, null, null, null, null, null);
         String[] columnNames = dbCursor.getColumnNames();
@@ -255,4 +249,28 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
 
+    public ArrayList<FormModel> getFormsList(String tabel_name){
+        ArrayList<FormModel> result= new ArrayList<>();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase("somePass");
+            Cursor cursor = db.rawQuery("SELECT * FROM '" + tabel_name + "';", null);
+            String dbValues = "";
+
+            if (cursor.moveToFirst()) {
+                do {
+                    dbValues = dbValues + "\n" + cursor.getString(0) + " , " + cursor.getString(1);
+                    FormModel formModel= new FormModel(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)),cursor.getString(cursor.getColumnIndex(     FeedReaderContract.FeedEntry._ID)));
+                    result.add(formModel);
+                    Log.e("dbValues", "====" + dbValues);
+                } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+            db.close();
+
+        } catch (Exception e) {
+            Log.e("Database helper", "Incorrect master key");
+        }
+    return result;
+    }
 }

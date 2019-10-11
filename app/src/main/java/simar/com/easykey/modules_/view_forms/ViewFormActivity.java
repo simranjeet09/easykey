@@ -5,21 +5,24 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.BaseActivity;
 import simar.com.easykey.modules_.HomeScreen.CatM;
 
-public class ViewFormList extends BaseActivity {
+public class ViewFormActivity extends BaseActivity {
     LinearLayout parent;
     ArrayList<EditText>allEdit= new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_form_list);
+        setContentView(R.layout.activity_view_form);
         parent = findViewById(R.id.parent);
-        CatM catM = (CatM) getIntent().getSerializableExtra("data");
-        String cNames[] = getdbIbstance().getColumnNames(catM.getName());
+
+        Toast.makeText( context, getIntent().getStringExtra("tbl_name"), Toast.LENGTH_SHORT).show();
+        String cNames[] = getdbIbstance().getColumnNames(getIntent().getStringExtra("tbl_name"));
         for (int i = 0; i < cNames.length; i++) {
             LayoutInflater inflater = LayoutInflater.from(context); // or (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             EditText et = (EditText) inflater.inflate(R.layout.edit_text_row, null);

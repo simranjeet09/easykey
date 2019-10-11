@@ -1,7 +1,4 @@
-package simar.com.easykey.modules_.HomeScreen.adapters;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+package simar.com.easykey.modules_.view_forms;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,18 +10,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import simar.com.easykey.R;
-import simar.com.easykey.modules_.HomeScreen.CatM;
-
-import simar.com.easykey.modules_.view_forms.ViewFormsList;
-
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> {
 
 
-    List<CatM> dataList = new ArrayList<>();
+
+public class AllFormsAdapter extends RecyclerView.Adapter<AllFormsAdapter.MyViewHolder> {
+
+
+    List<FormModel> dataList = new ArrayList<>();
     Context context;
 
-    public DataAdapter(Context context, List<CatM> dataList) {
+    public AllFormsAdapter(Context context, List<FormModel> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -40,23 +38,18 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder h, int pos) {
-        h.name.setText(dataList.get(pos).getLbl());
-        h.itemView.setOnClickListener(v ->handleClick(dataList.get(pos)));
+        h.name.setText(dataList.get(pos).getTitle());
+        h.itemView.setOnClickListener(v ->goForNextActivity(dataList.get(pos)));
 
     }
 
-    private void handleClick(CatM m) {
-      Intent intent= new Intent(context, ViewFormsList.class);
-      intent.putExtra("tbl_name",m.getName());
-      context.startActivity(intent);
 
-    }
 
-    private void goForNextActivity(Class c,CatM m) {
-        Intent intent=new Intent(context,c);
-        intent.putExtra("name",m.getName());
+    private void goForNextActivity(FormModel m) {
+        Intent intent=new Intent(context,ViewFormActivity.class);
+        intent.putExtra("name",m.getTitle());
         intent.putExtra("id",m.getId());
-        intent.putExtra("from","");
+        intent.putExtra("tbl_name",((ViewFormActivity)context).getIntent().getStringExtra("tbl_name"));
         context.startActivity(intent);
     }
 

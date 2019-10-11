@@ -151,8 +151,9 @@ public class EnterPinActivity extends AppCompatActivity {
             public void onPinChange(int pinLength, String intermediatePin) {
                 Log.d(TAG, "Pin changed, new length " + pinLength + " with intermediate pin " + intermediatePin);
             }
-
         };
+
+
 
         mPinLockView = (PinLockView) findViewById(R.id.pinlockView);
         mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
