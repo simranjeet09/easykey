@@ -46,7 +46,6 @@ import simar.com.easykey.lockmodule.fingerprint.FingerprintHandler;
 import simar.com.easykey.lockmodule.util.Animate;
 import simar.com.easykey.lockmodule.util.Utils;
 
-import static simar.com.easykey.modules_.AppSession.MyPREFERENCES;
 
 public class EnterPinActivity extends AppCompatActivity {
 

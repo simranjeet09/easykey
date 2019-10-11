@@ -77,16 +77,18 @@ public class HomeFragment extends Fragment {
 
     public void initAtFirst() {
         FeedReaderDbHelper feedReaderDbHelper = new FeedReaderDbHelper(getActivity());
+
+
+
         SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase("somePass");
         ContentValues V1 = new ContentValues();
-        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix + "password");
+        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix + "social");
         V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Password");
         if (feedReaderDbHelper.doesNotExist("Password")) {
             long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V1);
             ContentValues cvPass=new ContentValues();
             cvPass.put(FeedReaderContract.FeedEntry.COLUMN_CAT_ID,String.valueOf(id));
             cvPass.put(FeedReaderContract.FeedEntry.TABLE_COLUMN_label,String.valueOf(id));
-
 
         }
         if (feedReaderDbHelper.doesNotExist("WIFI Details")) {

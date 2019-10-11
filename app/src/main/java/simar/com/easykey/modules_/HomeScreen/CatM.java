@@ -1,6 +1,8 @@
 package simar.com.easykey.modules_.HomeScreen;
 
-public class CatM {
+import java.io.Serializable;
+
+public class CatM implements Serializable {
 
     String id;
     String tbl_name;

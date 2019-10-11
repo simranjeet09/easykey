@@ -868,7 +868,6 @@ public class AndroidDatabaseManager extends Activity implements AdapterView.OnIt
   	  	rll.setMargins(0, 20, 0, 0);
   	  	lastrid=ll.getId();
 	    lp.addView(ll, rll);
-	    
 	    }
   	   
   	  updaterowsv.addView(lp);

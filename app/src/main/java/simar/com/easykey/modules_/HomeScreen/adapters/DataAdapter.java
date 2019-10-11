@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import java.util.List;
 
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.HomeScreen.CatM;
+import simar.com.easykey.modules_.view_forms.ViewFormList;
+import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> {
 
@@ -44,8 +47,9 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
     }
 
     private void handleClick(CatM m) {
-
-
+      Intent intent= new Intent(context, ViewFormList.class);
+      intent.putExtra("data",m);
+      context.startActivity(intent);
 
     }
 

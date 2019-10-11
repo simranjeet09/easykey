@@ -28,6 +28,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         appSession = new AppSession(context);
+        SQLiteDatabase.loadLibs(context);
     }
 
     @Override
@@ -91,5 +92,10 @@ public class BaseActivity extends AppCompatActivity {
     public void addNewCat(String fields,String masterpass,String tbl_name){
         getDbInstance().createNewTable(fields,tbl_name,masterpass);
     }*/
+
+    public FeedReaderDbHelper getdbIbstance(){
+        return new FeedReaderDbHelper(context);
+    }
+
 
 }

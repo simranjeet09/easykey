@@ -240,4 +240,19 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             return alc;
         }
     }
+
+    public String[] getColumnNames(String tabelName) {
+        SQLiteDatabase sqlDB = this.getWritableDatabase("somePass");
+        Cursor dbCursor = sqlDB.query(tabelName, null, null, null, null, null, null);
+        String[] columnNames = dbCursor.getColumnNames();
+
+
+        for (int i = 0; i < columnNames.length; i++) {
+            Log.e("all names", columnNames[i] + "==");
+        }
+        return columnNames;
+
+    }
+
+
 }
