@@ -117,7 +117,7 @@ public class AddToDatabaseActivity extends BaseActivity {
 
         }
         if (!error){
-            String sql = "CREATE TABLE " + cat_title.getText().toString() + " (id INTEGER PRIMARY KEY, title text, " + TextUtils.join(",", vals) + " )";
+            String sql = "CREATE TABLE " + cat_title.getText().toString() + " ( "+FeedReaderContract.FeedEntry._ID+" INTEGER PRIMARY KEY, title text, " + TextUtils.join(",", vals) + " )";
 
             Log.e("sqlQuery", "==" + sql);
 

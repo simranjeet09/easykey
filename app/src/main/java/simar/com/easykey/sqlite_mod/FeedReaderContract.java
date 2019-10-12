@@ -7,6 +7,7 @@ import android.provider.BaseColumns;
 
         /* Inner class that defines the table contents */
         public static abstract class FeedEntry implements BaseColumns {
+            public static final String ID = "id";
             public static final String CATEGORY_TABLE_NAME = "category";
             public static final String EMAIL_TABLE_NAME = "social";
             public static final String EMAIL_TABLE_TITLE= "title";

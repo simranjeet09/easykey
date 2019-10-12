@@ -318,7 +318,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase("somePass");
         long id_=0;
         if (!id.isEmpty()){
-                id_=db.update(tbl_name, contentValues, "id="+id, null);
+                id_=db.update(tbl_name, contentValues, FeedReaderContract.FeedEntry._ID+"="+id, null);
         }
         id_= db.insert(tbl_name, null, contentValues);
          return id_;
