@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".modules_.view_forms.ViewFormsList"></activity>
+        <activity android:name=".modules_.view_forms.EditFormActivity"></activity>
+        <activity android:name=".modules_.view_forms.ViewFormsList" />
         <activity android:name=".modules_.view_forms.ViewFormActivity" />
         <activity android:name=".modules_.master_pass.MasterPasswordActivity" />
         <activity android:name=".modules_.MainActivity">
@@ -31,9 +32,9 @@
         <activity android:name=".modules_.add_cat.AddToDatabaseActivity" />
         <activity android:name=".sqlite_mod.AndroidDatabaseManager" />
     </application>
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
 </manifest>

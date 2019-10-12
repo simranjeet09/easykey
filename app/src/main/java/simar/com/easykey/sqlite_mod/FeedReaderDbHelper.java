@@ -277,7 +277,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         return result;
     }
 
-
     public boolean insertNewCat(String lbl, String sql) {
         SQLiteDatabase db = this.getWritableDatabase("somePass");
         ContentValues values = new ContentValues();
@@ -313,5 +312,15 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         db.execSQL(delete_row);
         db.execSQL(sql);
 
+    }
+
+    public long saveDataTotable(String id, ContentValues contentValues,String tbl_name) {
+        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        long id_=0;
+        if (!id.isEmpty()){
+                id_=db.update(tbl_name, contentValues, "id="+id, null);
+        }
+        id_= db.insert(tbl_name, null, contentValues);
+         return id_;
     }
 }
