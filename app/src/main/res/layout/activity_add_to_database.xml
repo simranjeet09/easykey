@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#08004e32"
     android:orientation="vertical"
+    android:background="@color/bg_clr"
     tools:context=".modules_.add_cat.AddToDatabaseActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -82,6 +82,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
                 android:maxLines="1"
+                android:digits="abcdefghijklmnopqrstuvwxyz"
                 android:padding="@dimen/margin_10dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/txt_17sp" />

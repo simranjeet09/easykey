@@ -1,5 +1,6 @@
 package simar.com.easykey.sqlite_mod;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
@@ -9,13 +10,15 @@ import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
+import java.time.chrono.ThaiBuddhistChronology;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import simar.com.easykey.modules_.view_forms.FormModel;
 
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static FeedReaderDbHelper instance;
-    public static final String tbl_suffix = "tbl_easy_key_";
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "EasyKey.db";
 
@@ -37,7 +40,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME + TEXT_TYPE + ")";*/
 
     private static final String SQL_CREATE_EMAIL_CAT =
-            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + " (" +
+            "CREATE TABLE " + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_CAT_ID + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE + " " + TEXT_TYPE + " ," +
@@ -48,7 +51,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
 
     private static final String SQL_CREATE_WIFI_CAT =
-            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.WIFI_TABLE_NAME + " (" +
+            "CREATE TABLE " + FeedReaderContract.FeedEntry.WIFI_TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_TITLE + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_CAT_ID + " " + TEXT_TYPE + " ," +
@@ -59,7 +62,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.WIFI_TABLE_DNS + TEXT_TYPE + ")";
 
     private static final String SQL_TABLE_COLOUMNS =
-            "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " (" +
+            "CREATE TABLE " + FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedReaderContract.FeedEntry.COLUMN_CAT_ID + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " " + TEXT_TYPE + " ," +
@@ -83,7 +86,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_EMAIL_CAT);
         db.execSQL(SQL_CREATE_WIFI_CAT);
-        db.execSQL(SQL_TABLE_COLOUMNS);
+        // db.execSQL(SQL_TABLE_COLOUMNS);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -235,7 +238,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
     public String[] getColumnNames(String tabelName) {
-        Log.e("tb;_name",tabelName);
+        Log.e("tb;_name", tabelName);
         SQLiteDatabase sqlDB = this.getWritableDatabase("somePass");
         Cursor dbCursor = sqlDB.query(tabelName, null, null, null, null, null, null);
         String[] columnNames = dbCursor.getColumnNames();
@@ -249,8 +252,8 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<FormModel> getFormsList(String tabel_name){
-        ArrayList<FormModel> result= new ArrayList<>();
+    public ArrayList<FormModel> getFormsList(String tabel_name) {
+        ArrayList<FormModel> result = new ArrayList<>();
         try {
             SQLiteDatabase db = this.getWritableDatabase("somePass");
             Cursor cursor = db.rawQuery("SELECT * FROM '" + tabel_name + "';", null);
@@ -259,7 +262,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     dbValues = dbValues + "\n" + cursor.getString(0) + " , " + cursor.getString(1);
-                    FormModel formModel= new FormModel(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)),cursor.getString(cursor.getColumnIndex(     FeedReaderContract.FeedEntry._ID)));
+                    FormModel formModel = new FormModel(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID)));
                     result.add(formModel);
                     Log.e("dbValues", "====" + dbValues);
                 } while (cursor.moveToNext());
@@ -271,6 +274,44 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("Database helper", "Incorrect master key");
         }
-    return result;
+        return result;
+    }
+
+
+    public boolean insertNewCat(String lbl, String sql) {
+        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        ContentValues values = new ContentValues();
+        Pattern pt = Pattern.compile("[^a-zA-Z0-9]");
+        String temp_lbl = lbl;
+        Matcher match = pt.matcher(temp_lbl);
+
+        while (match.find()) {
+            String s = match.group();
+            temp_lbl = temp_lbl.replaceAll("//" + s, "");
+        }
+
+        if (!doesNotExist(lbl)) {
+            return false;
+        } else {
+
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, temp_lbl);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, lbl);
+            long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, values);
+            Log.e("id", id + "=");
+            db.execSQL(sql);
+            return true;
+        }
+
+
+    }
+
+
+    public void deleteCatFromDb(String tbl_name) {
+        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        String sql = "DROP TABLE " + tbl_name;
+        String delete_row = "delete from " + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + " where " + FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME + "='" + tbl_name + "'";
+        db.execSQL(delete_row);
+        db.execSQL(sql);
+
     }
 }

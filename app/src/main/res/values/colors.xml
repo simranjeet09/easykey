@@ -14,4 +14,5 @@
     <color name="green_app">#A7E255</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
+    <color name="bg_clr">#f4fef1</color>
 </resources>

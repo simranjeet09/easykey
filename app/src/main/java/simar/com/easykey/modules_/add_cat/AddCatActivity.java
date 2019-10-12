@@ -1,6 +1,7 @@
 package simar.com.easykey.modules_.add_cat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import simar.com.easykey.R;
@@ -11,6 +12,7 @@ import simar.com.easykey.modules_.MainActivity;
 import simar.com.easykey.sqlite_mod.FeedReaderContract;
 import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,18 +27,27 @@ import java.util.ArrayList;
 public class AddCatActivity extends BaseActivity {
     RecyclerView cat_rv;
     DataAdapter categoryAdapter;
+    CardView add_Cat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cat);
         cat_rv=findViewById(R.id.cat_rv);
+        add_Cat=findViewById(R.id.add_Cat);
         SQLiteDatabase.loadLibs(context);
         cat_rv.setLayoutManager(new LinearLayoutManager(context));
         //   data = new FeedReaderDbHelper(getActivity()).getCategories(appSession.getMasterPassword());
 
-
-        categoryAdapter = new DataAdapter(context, getCategories());
+        categoryAdapter = new DataAdapter(context, getCategories(),true,getdbIbstance());
         cat_rv.setAdapter(categoryAdapter);
+        if (categoryAdapter.getItemCount()<=0){
+            add_Cat.setVisibility(View.VISIBLE);
+        }else {
+
+            add_Cat.setVisibility(View.GONE);
+
+        }
+
         showLockscreen();
     }
 
@@ -76,6 +87,14 @@ public class AddCatActivity extends BaseActivity {
         }
 
         return data;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
 
     }
 }

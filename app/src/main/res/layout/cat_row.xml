@@ -22,6 +22,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:adjustViewBounds="true"
                 android:src="@drawable/logo" />
 
             <TextView
@@ -31,8 +32,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableRight="@drawable/eye_"
                 android:drawablePadding="@dimen/margin_20dp"
-                android:drawableTint="@color/green_app"
-                android:fontFamily="@font/med"
+                 android:fontFamily="@font/med"
                 android:gravity="center_vertical"
                 android:padding="@dimen/layout_padding"
                 android:text="Demo Category"

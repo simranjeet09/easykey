@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_clr"
     tools:context=".modules_.add_cat.AddCatActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -26,10 +27,27 @@
             android:onClick="handleClick"
             android:src="@drawable/ic_arrow_back_black_24dp" />
     </androidx.appcompat.widget.Toolbar>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_Cat"
+        android:visibility="gone"
+        android:layout_below="@+id/toolbar"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="@dimen/margin_10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Category available.\nClick below button to add."
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/margin_10dp"/>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cat_rv"
         android:layout_width="match_parent"
+        android:paddingTop="@dimen/margin_10dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar" />
 

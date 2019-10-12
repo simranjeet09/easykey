@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,12 +28,13 @@ import simar.com.easykey.R;
 import simar.com.easykey.modules_.AppSession;
 import simar.com.easykey.modules_.HomeScreen.adapters.DataAdapter;
 import simar.com.easykey.modules_.MainActivity;
+import simar.com.easykey.modules_.add_cat.AddCatActivity;
 import simar.com.easykey.modules_.add_module_.SelectCategories;
 import simar.com.easykey.modules_.master_pass.MasterPasswordActivity;
 import simar.com.easykey.sqlite_mod.FeedReaderContract;
 import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 
-import static simar.com.easykey.sqlite_mod.FeedReaderDbHelper.tbl_suffix;
+
 
 public class HomeFragment extends Fragment {
 
@@ -41,11 +43,14 @@ public class HomeFragment extends Fragment {
     AppSession appSession;
     List<CatM> data = new ArrayList<>();
     DataAdapter categoryAdapter;
+    CardView add_Cat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vvv = inflater.inflate(R.layout.fragment_home, container, false);
+        add_Cat=vvv.findViewById(R.id.add_Cat);
+
         appSession = new AppSession(getActivity());
         SQLiteDatabase.loadLibs(getActivity());
         if (appSession.getIsFirstRun()) {
@@ -56,10 +61,21 @@ public class HomeFragment extends Fragment {
         add_new = vvv.findViewById(R.id.add_new);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         //   data = new FeedReaderDbHelper(getActivity()).getCategories(appSession.getMasterPassword());
-        categoryAdapter = new DataAdapter(getActivity(), getCategories());
+        categoryAdapter = new DataAdapter(getActivity(), getCategories(),false,null);
         rv.setAdapter(categoryAdapter);
+        categoryAdapter.notifyDataSetChanged();
+        if (categoryAdapter.getItemCount()<=0){
+            add_Cat.setVisibility(View.VISIBLE);
+        }else {
+            add_Cat.setVisibility(View.GONE);
+        }
         add_new.setOnClickListener(v -> handleAddNew());
-
+        add_Cat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),AddCatActivity.class));
+            }
+        });
         return vvv;
     }
 
@@ -72,17 +88,15 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+
     }
 
 
     public void initAtFirst() {
         FeedReaderDbHelper feedReaderDbHelper = new FeedReaderDbHelper(getActivity());
-
-
-
         SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase("somePass");
         ContentValues V1 = new ContentValues();
-        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix + "social");
+        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME,  "social");
         V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Password");
         if (feedReaderDbHelper.doesNotExist("Password")) {
             long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V1);
@@ -93,18 +107,15 @@ public class HomeFragment extends Fragment {
         }
         if (feedReaderDbHelper.doesNotExist("WIFI Details")) {
             ContentValues V2 = new ContentValues();
-            V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix + "wifi");
+            V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, "wifi");
             V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "WIFI Details");
             long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V2);
 
         }
-
         Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
         Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
-
         cursor.close();
         db.close();
-
     }
 
     public ArrayList<CatM> getCategories() {
@@ -136,6 +147,8 @@ public class HomeFragment extends Fragment {
         return data;
 
     }
+
+
 
 
 //    public void insertDataT(String tbl_name,String val)
