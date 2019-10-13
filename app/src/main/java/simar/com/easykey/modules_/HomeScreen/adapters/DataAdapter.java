@@ -62,6 +62,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
 
             Intent intent= new Intent(context, ViewFormsList.class);
             intent.putExtra("tbl_name",m.getName());
+            intent.putExtra("cat_id",m.getId());
             context.startActivity(intent);
 
         }else {

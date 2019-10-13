@@ -49,8 +49,8 @@ public class AllFormsAdapter extends RecyclerView.Adapter<AllFormsAdapter.MyView
         Intent intent=new Intent(context,ViewFormActivity.class);
         intent.putExtra("name",m.getTitle());
         intent.putExtra("id",m.getId());
-        intent.putExtra("tbl_name",((ViewFormActivity)context).getIntent().getStringExtra("tbl_name"));
-        context.startActivity(intent);
+        intent.putExtra("tbl_name",((ViewFormsList)context).getIntent().getStringExtra("tbl_name"));
+        ((ViewFormsList)context).startActivityForResult(intent,100);
     }
 
     @Override

@@ -18,6 +18,7 @@ import simar.com.easykey.modules_.HomeScreen.CatM;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
 
+
     List<CatM> dataList = new ArrayList<>();
     Context context;
 

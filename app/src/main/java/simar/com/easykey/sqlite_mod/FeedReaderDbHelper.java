@@ -12,6 +12,7 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 
 import java.time.chrono.ThaiBuddhistChronology;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +43,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_EMAIL_CAT =
             "CREATE TABLE " + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    FeedReaderContract.FeedEntry.EMAIL_TABLE_CAT_ID + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD + " " + TEXT_TYPE + " ," +
@@ -54,7 +54,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + FeedReaderContract.FeedEntry.WIFI_TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_TITLE + " " + TEXT_TYPE + " ," +
-                    FeedReaderContract.FeedEntry.WIFI_TABLE_CAT_ID + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_USERNAME + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_PASSWORD + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_IP + " " + TEXT_TYPE + " ," +
@@ -64,7 +63,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static final String SQL_TABLE_COLOUMNS =
             "CREATE TABLE " + FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    FeedReaderContract.FeedEntry.COLUMN_CAT_ID + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.TABLE_COLUMN_label + TEXT_TYPE + ")";
 
@@ -94,93 +92,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-/*
-    public void initAtFirst() {
-        SQLiteDatabase db = this.getWritableDatabase("easy_key");
-        ContentValues V1 = new ContentValues();
-        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix+"password");
-        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Password");
-        db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V1);
-        ContentValues V2 = new ContentValues();
-        V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix+"wifi");
-        V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "WIFI Details");
-        db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V2);
-        db.close();
-
-    }
-
-
-    public boolean createNewTable(String fields, String table_name, String master_pass) {
-        SQLiteDatabase db = this.getWritableDatabase(master_pass);
-        String sl = "CREATE TABLE " + tbl_suffix + " " + table_name + " (" +
-                FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                FeedReaderContract.FeedEntry.COLUMN_CAT_ID + " " + TEXT_TYPE + " ," +
-                fields + ")";
-        db.execSQL(sl);
-        insertNewCat(master_pass, table_name);
-
-        return true;
-    }
-
-
-    public void insertNewCat(String master_pass, String lbl) {
-        SQLiteDatabase db = this.getWritableDatabase(master_pass);
-        ContentValues values = new ContentValues();
-        Pattern pt = Pattern.compile("[^a-zA-Z0-9]");
-        String temp_lbl = lbl;
-        Matcher match = pt.matcher(temp_lbl);
-
-        while (match.find()) {
-            String s = match.group();
-            temp_lbl = temp_lbl.replaceAll("//" + s, "");
-        }
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, tbl_suffix + temp_lbl);
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, lbl);
-        long id = db.insert(tbl_suffix + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, values);
-        Log.e("id", id + "=");
-
-
-    }
-
-
-
-
-
-    public void showDataFromDb() {
-        try {
-            SQLiteDatabase db = this.getWritableDatabase("easy_key");
-            Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
-            Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
-
-            String dbValues = "";
-
-            if (cursor.moveToFirst()) {
-                do {
-                    dbValues = dbValues + "\n" + cursor.getString(0) + " , " + cursor.getString(1);
-                    Log.e("dbValues", "====" + dbValues);
-                } while (cursor.moveToNext());
-            }
-
-            cursor.close();
-            db.close();
-
-        } catch (Exception e) {
-            Log.e("Database helper", "Incorrect master key");
-        }
-    }
-
-
-    public void rekey(String old_pass, String passphrase) {
-        SQLiteDatabase db = this.getWritableDatabase(old_pass);
-        db.execSQL("PRAGMA rekey=" + passphrase);
-        db.close();
-    }
-
-    public void rekey1(String passphrase) {
-        SQLiteDatabase db = this.getWritableDatabase("");
-       db.execSQL("PRAGMA rekey=" + passphrase);
-        db.close();
-    }*/
 
 
     public boolean doesNotExist(String name) {
@@ -277,6 +188,36 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         return result;
     }
 
+
+   public ArrayList<HashMap<String,String>> getTabelRow(String tabel_name,String id) {
+       ArrayList<HashMap<String,String>> details= new ArrayList<>();
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase("somePass");
+            Cursor cursor = db.rawQuery("SELECT * FROM '" + tabel_name + "';", null);
+            String dbValues = "";
+
+            if (cursor.moveToFirst()) {
+
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    String data = cursor.getString(i);
+                    String column_name = cursor.getColumnName(i);
+
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("column_value", data);
+                    map.put("column_name", column_name);
+                    details.add(map); //change the type of details from ArrayList<String> to arrayList<HashMap<String,String>>
+                }
+            }
+            cursor.close();
+            db.close();
+
+        } catch (Exception e) {
+            Log.e("Database helper", "Incorrect master key");
+        }
+        return details;
+    }
+
     public boolean insertNewCat(String lbl, String sql) {
         SQLiteDatabase db = this.getWritableDatabase("somePass");
         ContentValues values = new ContentValues();
@@ -314,13 +255,13 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public long saveDataTotable(String id, ContentValues contentValues,String tbl_name) {
+    public long saveDataTotable(String id, ContentValues contentValues, String tbl_name) {
         SQLiteDatabase db = this.getWritableDatabase("somePass");
-        long id_=0;
-        if (!id.isEmpty()){
-                id_=db.update(tbl_name, contentValues, FeedReaderContract.FeedEntry._ID+"="+id, null);
+        long id_ = 0;
+        if (!id.isEmpty()) {
+            id_ = db.update(tbl_name, contentValues, FeedReaderContract.FeedEntry._ID + "=" + id, null);
         }
-        id_= db.insert(tbl_name, null, contentValues);
-         return id_;
+        id_ = db.insert(tbl_name, null, contentValues);
+        return id_;
     }
 }
