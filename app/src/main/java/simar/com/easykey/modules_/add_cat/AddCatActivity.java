@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import simar.com.easykey.R;
+import simar.com.easykey.modules_.AppSession;
 import simar.com.easykey.modules_.BaseActivity;
 import simar.com.easykey.modules_.HomeScreen.CatM;
 import simar.com.easykey.modules_.HomeScreen.adapters.DataAdapter;
@@ -64,8 +65,9 @@ public class AddCatActivity extends BaseActivity {
 
         ArrayList<CatM> data = new ArrayList<>();
         try {
-            FeedReaderDbHelper feedReaderDbHelper = new FeedReaderDbHelper(context);
-            SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase("somePass");
+            FeedReaderDbHelper feedReaderDbHelper =getdbIbstance();
+            String pass =getSessionInstance().getMasterPassword();
+            SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase(pass);
             Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
             Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
 

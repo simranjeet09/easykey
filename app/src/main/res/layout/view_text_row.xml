@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/field"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="8dp"
-    android:background="@drawable/edit_bg"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_10dp"
-    android:textColor="@color/black"
-    android:textSize="@dimen/txt_17sp">
+    android:orientation="vertical">
 
-</TextView>
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:paddingLeft="5dp"
+        android:paddingTop="@dimen/margin_10dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_17sp" />
+
+
+    <View
+        android:layout_width="35dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:background="@color/green_app" />
+
+    <TextView
+        android:id="@+id/field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/edit_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_10dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_17sp" />
+
+</LinearLayout>

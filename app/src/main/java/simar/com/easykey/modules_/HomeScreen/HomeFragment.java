@@ -3,6 +3,7 @@ package simar.com.easykey.modules_.HomeScreen;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -35,7 +36,6 @@ import simar.com.easykey.sqlite_mod.FeedReaderContract;
 import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 
 
-
 public class HomeFragment extends Fragment {
 
     RecyclerView rv;
@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vvv = inflater.inflate(R.layout.fragment_home, container, false);
-        add_Cat=vvv.findViewById(R.id.add_Cat);
+        add_Cat = vvv.findViewById(R.id.add_Cat);
 
         appSession = new AppSession(getActivity());
         SQLiteDatabase.loadLibs(getActivity());
@@ -61,19 +61,19 @@ public class HomeFragment extends Fragment {
         add_new = vvv.findViewById(R.id.add_new);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         //   data = new FeedReaderDbHelper(getActivity()).getCategories(appSession.getMasterPassword());
-        categoryAdapter = new DataAdapter(getActivity(), getCategories(),false,null);
+        categoryAdapter = new DataAdapter(getActivity(), getCategories(), false, null);
         rv.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
-        if (categoryAdapter.getItemCount()<=0){
+        if (categoryAdapter.getItemCount() <= 0) {
             add_Cat.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             add_Cat.setVisibility(View.GONE);
         }
         add_new.setOnClickListener(v -> handleAddNew());
         add_Cat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),AddCatActivity.class));
+                startActivity(new Intent(getActivity(), AddCatActivity.class));
             }
         });
         return vvv;
@@ -87,22 +87,23 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 
     public void initAtFirst() {
+
+        SQLiteDatabase.loadLibs(getActivity());
         FeedReaderDbHelper feedReaderDbHelper = new FeedReaderDbHelper(getActivity());
-        SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase("somePass");
+        String pass = new AppSession(getActivity()).getMasterPassword();
+        SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase(pass);
         ContentValues V1 = new ContentValues();
-        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME,  "social");
+        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, "social");
         V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Password");
         if (feedReaderDbHelper.doesNotExist("Password")) {
             long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V1);
-            ContentValues cvPass=new ContentValues();
-            cvPass.put(FeedReaderContract.FeedEntry.COLUMN_CAT_ID,String.valueOf(id));
-            cvPass.put(FeedReaderContract.FeedEntry.TABLE_COLUMN_label,String.valueOf(id));
+            ContentValues cvPass = new ContentValues();
+            cvPass.put(FeedReaderContract.FeedEntry.COLUMN_CAT_ID, String.valueOf(id));
+            cvPass.put(FeedReaderContract.FeedEntry.TABLE_COLUMN_label, String.valueOf(id));
 
         }
         if (feedReaderDbHelper.doesNotExist("WIFI Details")) {
@@ -123,7 +124,8 @@ public class HomeFragment extends Fragment {
         ArrayList<CatM> data = new ArrayList<>();
         try {
             FeedReaderDbHelper feedReaderDbHelper = new FeedReaderDbHelper(getActivity());
-            SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase("somePass");
+            String pass = new AppSession(getActivity()).getMasterPassword();
+            SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase(pass);
             Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
             Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
 
@@ -147,8 +149,6 @@ public class HomeFragment extends Fragment {
         return data;
 
     }
-
-
 
 
 //    public void insertDataT(String tbl_name,String val)

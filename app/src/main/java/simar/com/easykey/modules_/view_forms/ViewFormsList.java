@@ -66,4 +66,8 @@ public class ViewFormsList extends BaseActivity {
         }
 
     }
+
+    public void handleBack(View view) {
+        onBackPressed();
+    }
 }

@@ -22,8 +22,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-
-
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyStore;
@@ -45,6 +43,7 @@ import simar.com.easykey.lockmodule.fingerprint.FingerPrintListener;
 import simar.com.easykey.lockmodule.fingerprint.FingerprintHandler;
 import simar.com.easykey.lockmodule.util.Animate;
 import simar.com.easykey.lockmodule.util.Utils;
+
 
 
 public class EnterPinActivity extends AppCompatActivity {
@@ -293,8 +292,10 @@ public class EnterPinActivity extends AppCompatActivity {
     }
 
     private void writePinToSharedPreferences(String pin) {
-        SharedPreferences prefs = this.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+          SharedPreferences prefs = this.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         prefs.edit().putString(KEY_PIN, Utils.sha256(pin)).apply();
+
+
     }
 
     private String getPinFromSharedPreferences() {

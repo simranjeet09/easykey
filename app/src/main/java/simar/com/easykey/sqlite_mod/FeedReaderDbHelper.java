@@ -2,29 +2,37 @@ package simar.com.easykey.sqlite_mod;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.MatrixCursor;
 import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabaseHook;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
+import java.io.File;
 import java.time.chrono.ThaiBuddhistChronology;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import simar.com.easykey.modules_.AppSession;
 import simar.com.easykey.modules_.view_forms.FormModel;
 
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static FeedReaderDbHelper instance;
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "EasyKey.db";
+    public static final String DATABASE_NAME = "EasyKey_.db";
 
     private static final String TEXT_TYPE = " TEXT";
 
+    private static final String PREFERENCES = "easy_key_simar.com.easykey";
+    private static final String KEY_PIN = "pin";
+    private String master_pass = "somePass";
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + " (" +
@@ -71,16 +79,23 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     public FeedReaderDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
 
-    static public synchronized FeedReaderDbHelper getInstance(Context context) {
-        if (instance == null) {
-            instance = new FeedReaderDbHelper(context);
-        }
-        return instance;
+        master_pass = new AppSession(context).getMasterPassword();
     }
+   /* public FeedReaderDbHelper(Context context){
+        SQLiteDatabase.loadLibs(this);                               // line 21
+
+        File databaseFile = getDatabasePath("names.db");
+        databaseFile.mkdirs();
+        databaseFile.delete();
+        SQLiteDatabase database =                                   // line 27
+                SQLiteDatabase.openOrCreateDatabase(databaseFile,"pass123",
+                        null);
+    }*/
+
 
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_EMAIL_CAT);
         db.execSQL(SQL_CREATE_WIFI_CAT);
@@ -93,9 +108,8 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
 
-
     public boolean doesNotExist(String name) {
-        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
         String query = "SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "' WHERE " + FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + " ='" + name + "'";
         Cursor cursor = db.rawQuery(query, new String[]{});
         if (cursor.getCount() > 0) {
@@ -106,7 +120,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     public ArrayList<Cursor> getData(String Query) {
         //get writable database
-        SQLiteDatabase sqlDB = this.getWritableDatabase("somePass");
+        SQLiteDatabase sqlDB = this.getWritableDatabase(master_pass);
         String[] columns = new String[]{"message"};
         //an array list of cursor to save two cursors one has results from the query
         //other cursor stores error message if any errors are triggered
@@ -150,7 +164,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     public String[] getColumnNames(String tabelName) {
         Log.e("tb;_name", tabelName);
-        SQLiteDatabase sqlDB = this.getWritableDatabase("somePass");
+        SQLiteDatabase sqlDB = this.getWritableDatabase(master_pass);
         Cursor dbCursor = sqlDB.query(tabelName, null, null, null, null, null, null);
         String[] columnNames = dbCursor.getColumnNames();
 
@@ -166,7 +180,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     public ArrayList<FormModel> getFormsList(String tabel_name) {
         ArrayList<FormModel> result = new ArrayList<>();
         try {
-            SQLiteDatabase db = this.getWritableDatabase("somePass");
+            SQLiteDatabase db = this.getWritableDatabase(master_pass);
             Cursor cursor = db.rawQuery("SELECT * FROM '" + tabel_name + "';", null);
             String dbValues = "";
 
@@ -189,12 +203,12 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
 
-   public ArrayList<HashMap<String,String>> getTabelRow(String tabel_name,String id) {
-       ArrayList<HashMap<String,String>> details= new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getTabelRow(String tabel_name, String id) {
+        ArrayList<HashMap<String, String>> details = new ArrayList<>();
 
         try {
-            SQLiteDatabase db = this.getWritableDatabase("somePass");
-            Cursor cursor = db.rawQuery("SELECT * FROM '" + tabel_name + "';", null);
+            SQLiteDatabase db = this.getWritableDatabase(master_pass);
+            Cursor cursor = db.rawQuery("SELECT * FROM '" + tabel_name + "' WHERE _id=" + id + ";", null);
             String dbValues = "";
 
             if (cursor.moveToFirst()) {
@@ -206,6 +220,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     HashMap<String, String> map = new HashMap<String, String>();
                     map.put("column_value", data);
                     map.put("column_name", column_name);
+                    Log.e("vals", String.valueOf(map));
                     details.add(map); //change the type of details from ArrayList<String> to arrayList<HashMap<String,String>>
                 }
             }
@@ -219,7 +234,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertNewCat(String lbl, String sql) {
-        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
         ContentValues values = new ContentValues();
         Pattern pt = Pattern.compile("[^a-zA-Z0-9]");
         String temp_lbl = lbl;
@@ -247,7 +262,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
 
     public void deleteCatFromDb(String tbl_name) {
-        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
         String sql = "DROP TABLE " + tbl_name;
         String delete_row = "delete from " + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + " where " + FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME + "='" + tbl_name + "'";
         db.execSQL(delete_row);
@@ -256,12 +271,24 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
 
     public long saveDataTotable(String id, ContentValues contentValues, String tbl_name) {
-        SQLiteDatabase db = this.getWritableDatabase("somePass");
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
         long id_ = 0;
         if (!id.isEmpty()) {
             id_ = db.update(tbl_name, contentValues, FeedReaderContract.FeedEntry._ID + "=" + id, null);
         }
         id_ = db.insert(tbl_name, null, contentValues);
         return id_;
+    }
+
+    public void removeRow(String id, String tbl_name) {
+        String delete_row = "delete from " + tbl_name + " where " + FeedReaderContract.FeedEntry._ID + "=" + id;
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
+        db.execSQL(delete_row);
+    }
+
+    public void reKey(String newKey, String oldkey) {
+        SQLiteDatabase db = this.getWritableDatabase(oldkey);
+        db.rawExecSQL("BEGIN IMMEDIATE TRANSACTION;");
+        db.rawExecSQL("PRAGMA rekey = '" + newKey + "';");
     }
 }

@@ -37,6 +37,7 @@
         android:id="@+id/confirm_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/margin_10dp"
         android:background="@drawable/edit_bg"
         android:hint="Enter new master password"
