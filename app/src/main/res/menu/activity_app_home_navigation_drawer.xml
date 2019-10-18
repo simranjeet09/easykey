@@ -15,7 +15,7 @@
         <item
             android:id="@+id/change_master"
             android:icon="@drawable/settings"
-            android:title="@string/reset_master_password" />
+            android:title="@string/settings" />
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_share"

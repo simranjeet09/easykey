@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/title"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_title" />
         <TextView

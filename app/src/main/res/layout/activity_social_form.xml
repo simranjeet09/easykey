@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules_.social_form.SocialFormActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Social Account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_17sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleClick"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="@dimen/margin_10dp"
+                    android:paddingBottom="5dp"
+                    android:text="Type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:background="@color/green_app" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_bg"
+                    android:hint="Select Type"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_10dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="@dimen/margin_10dp"
+                    android:paddingBottom="5dp"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:background="@color/green_app" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_bg"
+                    android:hint="email"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_10dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="@dimen/margin_10dp"
+                    android:paddingBottom="5dp"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:background="@color/green_app" />
+
+                <TextView
+                    android:id="@+id/pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_bg"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_10dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

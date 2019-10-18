@@ -56,7 +56,10 @@ public class ViewFormsList extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
             list = getdbIbstance().getFormsList(getIntent().getStringExtra("tbl_name"));
+            allFormsAdapter = new AllFormsAdapter(this, list);
+            rv_list.setAdapter(allFormsAdapter);
             allFormsAdapter.notifyDataSetChanged();
             if (allFormsAdapter.getItemCount()>0){
                 noData.setVisibility(View.GONE);

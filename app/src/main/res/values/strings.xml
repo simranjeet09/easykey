@@ -37,4 +37,5 @@
     <string name="reset_master_password">Reset master password</string>
     <string name="enter_old">Enter old password.</string>
     <string name="enter_pass">Enter new password.</string>
+    <string name="desc">App require this permision to detect currently open app so that it can give you suggestions in real time.</string>
 </resources>

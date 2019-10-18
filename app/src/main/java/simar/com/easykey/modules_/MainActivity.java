@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import simar.com.easykey.modules_.HomeScreen.AppHomeNavigation;
 
 
 public class MainActivity extends AppCompatActivity {
+
     Context context = MainActivity.this;
     AppSession appSession;
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         appSession = new AppSession(context);
         Handler handler = new Handler();
+        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -90,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
         dia.show();
+        Window window = dia.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

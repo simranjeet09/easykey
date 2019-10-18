@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.BaseActivity;
@@ -36,12 +37,15 @@ public class EditFormActivity extends BaseActivity {
         title = findViewById(R.id.title);
         title.setText(getIntent().getStringExtra("tbl_name"));
 
+        if (getIntent().getStringExtra("id").isEmpty()){
+            findViewById(R.id.delete).setVisibility(View.GONE);
+        }
+
         initViews();
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "aef" + allEdit.size() + "==", Toast.LENGTH_SHORT).show();
                 Log.e("size", allEdit.size() + "==");
                 ContentValues contentValues = new ContentValues();
                 boolean isEmpty = false;
@@ -62,7 +66,7 @@ public class EditFormActivity extends BaseActivity {
                 if (!isEmpty) {
 
                     long result = 0;
-                    if (!getIntent().hasExtra("id")) {
+                    if (getIntent().getStringExtra("id").isEmpty()) {
                         result = getdbIbstance().saveDataTotable("", contentValues, getIntent().getStringExtra("tbl_name"));
                     } else {
                         result = getdbIbstance().saveDataTotable(getIntent().getStringExtra("id"), contentValues, getIntent().getStringExtra("tbl_name"));
@@ -130,10 +134,10 @@ public class EditFormActivity extends BaseActivity {
                     label.setText(data.get(i).get("column_name"));
                     et.setText(data.get(i).get("column_value"));
                     et.setTag(data.get(i).get("column_name"));
-                    if (!data.get(i).get("column_name").equals("title")) {
+                    /*if (!data.get(i).get("column_name").equals("title")) {
                         et.setInputType(InputType.TYPE_CLASS_TEXT |
                                 InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    }
+                    }*/
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.bottomMargin = 15;
                     layoutParams.leftMargin = 15;
@@ -161,7 +165,10 @@ public class EditFormActivity extends BaseActivity {
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getdbIbstance().removeRow(getIntent().getStringExtra("id"),getIntent().getStringExtra("tbl_name"));
+                getdbIbstance().removeRow(getIntent().getStringExtra("id"), getIntent().getStringExtra("tbl_name"));
+
+                setResult(RESULT_OK);
+                finish();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

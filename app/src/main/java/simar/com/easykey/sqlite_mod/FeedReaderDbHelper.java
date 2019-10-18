@@ -275,8 +275,10 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         long id_ = 0;
         if (!id.isEmpty()) {
             id_ = db.update(tbl_name, contentValues, FeedReaderContract.FeedEntry._ID + "=" + id, null);
+        }else {
+            id_ = db.insert(tbl_name, null, contentValues);
+
         }
-        id_ = db.insert(tbl_name, null, contentValues);
         return id_;
     }
 
