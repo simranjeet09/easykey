@@ -91,7 +91,6 @@ public class HomeFragment extends Fragment {
 
 
     public void initAtFirst() {
-
         SQLiteDatabase.loadLibs(getActivity());
         FeedReaderDbHelper feedReaderDbHelper = new FeedReaderDbHelper(getActivity());
         String pass = new AppSession(getActivity()).getMasterPassword();
@@ -113,6 +112,8 @@ public class HomeFragment extends Fragment {
             long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V2);
 
         }
+
+
         Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
         Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
         cursor.close();

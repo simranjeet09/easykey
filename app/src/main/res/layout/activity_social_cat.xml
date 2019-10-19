@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules_.social_form.SocialCatActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Social Account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_17sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleClick"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10dp">
+
+            <LinearLayout
+                android:id="@+id/facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:onClick="handleFacebook"
+                    android:text="Facebook"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/twitter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:onClick="handleTwitter"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Twitter"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/instagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Instagram"
+                    android:onClick="handleInstagram"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/skype"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:onClick="handleSkype"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Skype"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/viber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Viber"
+                    android:onClick="handleViber"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/snapchat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Snapchat"
+                    android:onClick="handleSnapchat"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/pinterest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Pinterest"
+                    android:onClick="handlePinterest"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/other"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@drawable/eye_"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:fontFamily="@font/med"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/layout_padding"
+                    android:text="Other"
+                    android:onClick="handleOther"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_17sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

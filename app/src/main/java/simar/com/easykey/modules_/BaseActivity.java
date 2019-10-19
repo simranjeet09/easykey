@@ -115,7 +115,10 @@ public class BaseActivity extends AppCompatActivity {
         final int NOTIFY_ID = 0; // ID of notification
         String id = "10"; // default_channel_id
         String title = "Easy Key"; // Default Channel
-        Intent intent;
+      //  Intent intent;
+        Intent i = new Intent();
+        i.setClassName(this, BReceiver.class.getName());
+        i.setAction("Test");
         PendingIntent pendingIntent;
         NotificationCompat.Builder builder;
         if (notifManager == null) {
@@ -131,9 +134,12 @@ public class BaseActivity extends AppCompatActivity {
                 notifManager.createNotificationChannel(mChannel);
             }
             builder = new NotificationCompat.Builder(context, id);
-            intent = new Intent(context, AppHomeNavigation.class);
+
+
+
+           // intent = new Intent(context, AppHomeNavigation.class);
            // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
             builder.setContentTitle(aMessage)                            // required
                     .setSmallIcon(R.mipmap.ic_launcher) // required
                     .setContentText(context.getString(R.string.app_name)) // required
@@ -146,9 +152,9 @@ public class BaseActivity extends AppCompatActivity {
             /* .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})*/;
         } else {
             builder = new NotificationCompat.Builder(context, id);
-            intent = new Intent(context, AppHomeNavigation.class);
+           // intent = new Intent(context, AppHomeNavigation.class);
             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
             builder.setContentTitle(aMessage)                            // required
                     .setSmallIcon(R.mipmap.ic_launcher)   // required
                     .setContentText(context.getString(R.string.app_name)) // required
@@ -166,5 +172,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    public void goToNext(String cat_name,Class aClass){
+        Intent intent= new Intent(context,aClass);
+        intent.putExtra("cat",cat_name);
+        startActivityForResult(intent,111);
+    }
 
 }

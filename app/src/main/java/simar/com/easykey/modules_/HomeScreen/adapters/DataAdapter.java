@@ -20,6 +20,8 @@ import java.util.List;
 import simar.com.easykey.R;
 import simar.com.easykey.modules_.HomeScreen.CatM;
 
+import simar.com.easykey.modules_.social_form.SocialCatActivity;
+import simar.com.easykey.modules_.social_form.SocialFormActivity;
 import simar.com.easykey.modules_.view_forms.ViewFormsList;
 import simar.com.easykey.sqlite_mod.FeedReaderDbHelper;
 
@@ -28,13 +30,14 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
 
     List<CatM> dataList = new ArrayList<>();
     Context context;
-    Boolean isEditEnabled=false;
+    Boolean isEditEnabled = false;
     FeedReaderDbHelper feedReaderDbHelper;
+
     public DataAdapter(Context context, List<CatM> dataList, Boolean isEditEnabled, FeedReaderDbHelper feedReaderDbHelper) {
         this.context = context;
         this.dataList = dataList;
-        this.isEditEnabled=isEditEnabled;
-        this.feedReaderDbHelper=feedReaderDbHelper;
+        this.isEditEnabled = isEditEnabled;
+        this.feedReaderDbHelper = feedReaderDbHelper;
     }
 
 
@@ -49,26 +52,35 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder h, int pos) {
         h.name.setText(dataList.get(pos).getLbl());
-        if (isEditEnabled){
-            h.name.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(context,R.drawable.ic_delete_black_24dp),null);
+        if (isEditEnabled) {
+            h.name.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_delete_black_24dp), null);
         }
-        h.itemView.setOnClickListener(v ->handleClick(dataList.get(pos),pos));
+        h.itemView.setOnClickListener(v -> handleClick(dataList.get(pos), pos));
     }
 
-    private void handleClick(CatM m,int pos) {
+    private void handleClick(CatM m, int pos) {
 
 
-        if (!isEditEnabled){
+        if (!isEditEnabled) {
 
-            Intent intent= new Intent(context, ViewFormsList.class);
-            intent.putExtra("tbl_name",m.getName());
-            intent.putExtra("cat_id",m.getId());
-            context.startActivity(intent);
+            if (pos == 0) {
+                Intent intent = new Intent(context, SocialCatActivity.class);
+                context.startActivity(intent);
 
-        }else {
+            } else {
 
-            AlertDialog.Builder builder= new AlertDialog.Builder(context);
-            builder.setMessage("Do you want to delete "+m.getLbl()+" from the app.\nPlease note: It would not be recoverable!");
+                Intent intent = new Intent(context, ViewFormsList.class);
+                intent.putExtra("tbl_name", m.getName());
+                intent.putExtra("cat_id", m.getId());
+                context.startActivity(intent);
+
+            }
+
+
+        } else {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Do you want to delete " + m.getLbl() + " from the app.\nPlease note: It would not be recoverable!");
             builder.setTitle("WARNING!");
             builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                 @Override

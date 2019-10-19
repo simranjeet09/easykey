@@ -39,6 +39,7 @@ import simar.com.easykey.modules_.add_cat.AddCatActivity;
 
 import simar.com.easykey.modules_.settings_mod.AppSettingsActivity;
 import simar.com.easykey.services.FloatingViewService;
+import simar.com.easykey.sqlite_mod.AndroidDatabaseManager;
 
 
 public class AppHomeNavigation extends BaseActivity
@@ -74,7 +75,7 @@ public class AppHomeNavigation extends BaseActivity
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   goToNext(AndroidDatabaseManager.class);
+               goToNext(AndroidDatabaseManager.class);
             }
         });
         FragmentManager fm = getSupportFragmentManager();

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import simar.com.easykey.R;
+import simar.com.easykey.modules_.BReceiver;
 import simar.com.easykey.modules_.HomeScreen.AppHomeNavigation;
 
 public class WindowChangeDetectingService extends AccessibilityService {
@@ -54,9 +55,9 @@ public class WindowChangeDetectingService extends AccessibilityService {
                 if (isActivity){
                     Log.i("CurrentActivity", componentName.flattenToShortString());
                     if (componentName.flattenToShortString().contains("com.facebook.account.login.activity.SimpleLoginActivity")){
-                        createNotification("facebook running",this);
+                        createNotification("Facebook",this);
 
-                        startService(new Intent(getBaseContext(), FloatingViewService.class));
+                     //   startService(new Intent(getBaseContext(), FloatingViewService.class));
 
                     }
 
@@ -84,7 +85,11 @@ public class WindowChangeDetectingService extends AccessibilityService {
         final int NOTIFY_ID = 0; // ID of notification
         String id = "10"; // default_channel_id
         String title = "Easy Key"; // Default Channel
-        Intent intent;
+        //  Intent intent;
+        Intent i = new Intent();
+        i.setClassName(this, BReceiver.class.getName());
+        i.setAction(aMessage);
+
         PendingIntent pendingIntent;
         NotificationCompat.Builder builder;
         if (notifManager == null) {
@@ -95,41 +100,40 @@ public class WindowChangeDetectingService extends AccessibilityService {
             NotificationChannel mChannel = notifManager.getNotificationChannel(id);
             if (mChannel == null) {
                 mChannel = new NotificationChannel(id, title, importance);
-             //   mChannel.enableVibration(true);
-               // mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                mChannel.enableVibration(false);
+
                 notifManager.createNotificationChannel(mChannel);
             }
             builder = new NotificationCompat.Builder(context, id);
-            intent = new Intent(context, AppHomeNavigation.class);
+
+
+
+            // intent = new Intent(context, AppHomeNavigation.class);
             // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
             builder.setContentTitle(aMessage)                            // required
                     .setSmallIcon(R.mipmap.ic_launcher) // required
                     .setContentText(context.getString(R.string.app_name)) // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setContentIntent(pendingIntent)
-                    //.setOngoing(true)
-                    //.setOnlyAlertOnce(true)
+                    .setOngoing(true)
+                    .setOnlyAlertOnce(true)
                     //.setTicker(aMessage)
                     .setAutoCancel(false)
             /* .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})*/;
         } else {
             builder = new NotificationCompat.Builder(context, id);
-            intent = new Intent(context, AppHomeNavigation.class);
-            startService(new Intent(getBaseContext(), FloatingViewService.class));
-
-
-
+            // intent = new Intent(context, AppHomeNavigation.class);
             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
             builder.setContentTitle(aMessage)                            // required
                     .setSmallIcon(R.mipmap.ic_launcher)   // required
                     .setContentText(context.getString(R.string.app_name)) // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setContentIntent(pendingIntent)
                     // .setTicker(aMessage)
-                   // .setOnlyAlertOnce(true)
-                    //.setOngoing(true)
+                    .setOnlyAlertOnce(true)
+                    .setOngoing(true)
                     .setAutoCancel(false)
                     /*.setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})*/
                     .setPriority(Notification.PRIORITY_HIGH);

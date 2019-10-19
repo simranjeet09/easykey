@@ -21,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import simar.com.easykey.modules_.AppSession;
+import simar.com.easykey.modules_.social_form.SocialModel;
 import simar.com.easykey.modules_.view_forms.FormModel;
 
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
@@ -41,20 +42,13 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + TEXT_TYPE +
                     " )";
 
-/*
-    private static final String SQL_CREATE_ENTRIES =
-                "CREATE TABLE " + tbl_suffix + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + " (" +
-                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
-                    FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + " " + TEXT_TYPE + " ," +
-                    FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME + TEXT_TYPE + ")";*/
-
     private static final String SQL_CREATE_EMAIL_CAT =
             "CREATE TABLE " + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + " (" +
-                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD + " " + TEXT_TYPE + " ," +
-                    FeedReaderContract.FeedEntry.EMAIL_TABLE_LINK + " " + TEXT_TYPE + " ," +
+                    FeedReaderContract.FeedEntry.SOCIAL_CAT + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE + TEXT_TYPE + ")";
 
 
@@ -68,30 +62,14 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.WIFI_TABLE_PORT + " " + TEXT_TYPE + " ," +
                     FeedReaderContract.FeedEntry.WIFI_TABLE_DNS + TEXT_TYPE + ")";
 
-    private static final String SQL_TABLE_COLOUMNS =
-            "CREATE TABLE " + FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " (" +
-                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    FeedReaderContract.FeedEntry.TABLE_COLUMN_NAMES + " " + TEXT_TYPE + " ," +
-                    FeedReaderContract.FeedEntry.TABLE_COLUMN_label + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME;
 
     public FeedReaderDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
         master_pass = new AppSession(context).getMasterPassword();
     }
-   /* public FeedReaderDbHelper(Context context){
-        SQLiteDatabase.loadLibs(this);                               // line 21
-
-        File databaseFile = getDatabasePath("names.db");
-        databaseFile.mkdirs();
-        databaseFile.delete();
-        SQLiteDatabase database =                                   // line 27
-                SQLiteDatabase.openOrCreateDatabase(databaseFile,"pass123",
-                        null);
-    }*/
 
 
     public void onCreate(SQLiteDatabase db) {
@@ -275,7 +253,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         long id_ = 0;
         if (!id.isEmpty()) {
             id_ = db.update(tbl_name, contentValues, FeedReaderContract.FeedEntry._ID + "=" + id, null);
-        }else {
+        } else {
             id_ = db.insert(tbl_name, null, contentValues);
 
         }
@@ -293,4 +271,62 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         db.rawExecSQL("BEGIN IMMEDIATE TRANSACTION;");
         db.rawExecSQL("PRAGMA rekey = '" + newKey + "';");
     }
+
+    public ArrayList<SocialModel> getdataFromSocialTabel(String cat) {
+        ArrayList<SocialModel> result = new ArrayList<>();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase(master_pass);
+            Cursor cursor = db.rawQuery("SELECT * FROM '" +  FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + "';", null);
+            String dbValues = "";
+
+            if (cursor.moveToFirst()) {
+                do {
+                    dbValues = dbValues + "\n"+"id==" + cursor.getString(0) + " , " + cursor.getString(1);
+                    SocialModel socialModel = new SocialModel
+                            (Integer.parseInt(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID))),
+                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)),
+                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL)),
+                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD)),
+                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.SOCIAL_CAT)),
+                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE)));
+                    result.add(socialModel);
+                    Log.e("dbValues", "====" + dbValues);
+                 } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+            db.close();
+
+        } catch (Exception e) {
+            Log.e("Database helper", "Incorrect master key"+e);
+        }
+
+
+        return result;
+    }
+
+    public int insertSocialVals(int id, String title, String email, String pass, String notes, String categoty) {
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
+        ContentValues values = new ContentValues();
+        values.put(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE, title);
+        values.put(FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL, email);
+        values.put(FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD, pass);
+        values.put(FeedReaderContract.FeedEntry.SOCIAL_CAT, categoty);
+        if (!notes.isEmpty()) {
+            values.put(FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE, notes);
+            if (id!=0) {
+                values.put(FeedReaderContract.FeedEntry._ID, id);
+            }
+        }
+        long res = 0;
+        if (id!=0) {
+            res = db.update(FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME, values, FeedReaderContract.FeedEntry._ID + "=" + id, null);
+        } else {
+            res = db.insertOrThrow(FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME, null, values);
+
+        }
+        Log.e("inserted","id"+res);
+        return (int) res;
+    }
 }
+
