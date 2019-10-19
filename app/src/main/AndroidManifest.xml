@@ -16,10 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".modules_.AlertDialogActivity"
-android:taskAffinity=""
+        <activity
+            android:name=".home_dialog.AlertDialogActivity"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".modules_.social_form.SocialFormDetails" />
         <activity android:name=".modules_.social_form.SocialCatActivity" />
 
@@ -61,6 +62,10 @@ android:taskAffinity=""
         <activity android:name=".modules_.add_cat.AddCatActivity" />
         <activity android:name=".modules_.add_cat.AddToDatabaseActivity" />
         <activity android:name=".sqlite_mod.AndroidDatabaseManager" />
+        <activity android:name=".lockmodule.activity.EnterPinActivityDialog"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <receiver
             android:name=".modules_.BReceiver"

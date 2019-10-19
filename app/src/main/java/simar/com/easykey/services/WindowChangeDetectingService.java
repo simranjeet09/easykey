@@ -25,7 +25,7 @@ import simar.com.easykey.modules_.BReceiver;
 import simar.com.easykey.modules_.HomeScreen.AppHomeNavigation;
 
 public class WindowChangeDetectingService extends AccessibilityService {
-     @Override
+    @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
 
@@ -46,20 +46,35 @@ public class WindowChangeDetectingService extends AccessibilityService {
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             if (event.getPackageName() != null && event.getClassName() != null) {
                 ComponentName componentName = new ComponentName(
-                    event.getPackageName().toString(),
-                    event.getClassName().toString()
+                        event.getPackageName().toString(),
+                        event.getClassName().toString()
                 );
 
                 ActivityInfo activityInfo = tryGetActivity(componentName);
                 boolean isActivity = activityInfo != null;
-                if (isActivity){
+                if (isActivity) {
                     Log.i("CurrentActivity", componentName.flattenToShortString());
-                    if (componentName.flattenToShortString().contains("com.facebook.account.login.activity.SimpleLoginActivity")){
-                        createNotification("Facebook",this);
-
-                     //   startService(new Intent(getBaseContext(), FloatingViewService.class));
-
+                    String cat = "";
+                    String stringToCheck=componentName.flattenToShortString();
+                    if (stringToCheck.contains("facebook")) {
+                        cat = "Facebook";
+                        //   startService(new Intent(getBaseContext(), FloatingViewService.class));
+                    }else if(stringToCheck.contains("instagram")){
+                        cat="Instagram";
+                    }else if(stringToCheck.contains("twitter")){
+                        cat="Twitter";
+                    }else if(stringToCheck.contains("skype")){
+                        cat="Skype";
+                    }else if(stringToCheck.contains("Viber")){
+                        cat="Viber";
+                    }else if(stringToCheck.contains("Snapchat")){
+                        cat="Snapchat";
+                    }else if(stringToCheck.contains("Pinterest")){
+                        cat="Pinterest";
+                    }else {
+                        cat="Other";
                     }
+                    createNotification(cat, this);
 
                 }
 
@@ -76,7 +91,8 @@ public class WindowChangeDetectingService extends AccessibilityService {
     }
 
     @Override
-    public void onInterrupt() {}
+    public void onInterrupt() {
+    }
 
 
     private NotificationManager notifManager;
@@ -89,8 +105,12 @@ public class WindowChangeDetectingService extends AccessibilityService {
         Intent i = new Intent();
         i.setClassName(this, BReceiver.class.getName());
         i.setAction(aMessage);
-
         PendingIntent pendingIntent;
+
+        if (aMessage.equals("Other")){
+            aMessage="App is running";
+        }
+
         NotificationCompat.Builder builder;
         if (notifManager == null) {
             notifManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -105,7 +125,6 @@ public class WindowChangeDetectingService extends AccessibilityService {
                 notifManager.createNotificationChannel(mChannel);
             }
             builder = new NotificationCompat.Builder(context, id);
-
 
 
             // intent = new Intent(context, AppHomeNavigation.class);

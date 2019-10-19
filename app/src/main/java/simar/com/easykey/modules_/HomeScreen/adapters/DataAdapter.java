@@ -53,6 +53,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder h, int pos) {
         h.name.setText(dataList.get(pos).getLbl());
         if (isEditEnabled) {
+
             h.name.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_delete_black_24dp), null);
         }
         h.itemView.setOnClickListener(v -> handleClick(dataList.get(pos), pos));

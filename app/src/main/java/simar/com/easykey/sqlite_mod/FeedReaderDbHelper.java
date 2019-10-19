@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import simar.com.easykey.home_dialog.EmailPassModel;
 import simar.com.easykey.modules_.AppSession;
 import simar.com.easykey.modules_.social_form.SocialModel;
 import simar.com.easykey.modules_.view_forms.FormModel;
@@ -276,29 +277,35 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         ArrayList<SocialModel> result = new ArrayList<>();
         try {
             SQLiteDatabase db = this.getWritableDatabase(master_pass);
-            Cursor cursor = db.rawQuery("SELECT * FROM '" +  FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + "';", null);
+            Log.e("cat", cat + "==");
+            Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + "' WHERE " + FeedReaderContract.FeedEntry.SOCIAL_CAT + "='" + cat + "';", null);
             String dbValues = "";
+/*
+         String[]   selectionArgs = new String[] { cat };
+            selectionArgs   = new String[] { "%"+selectionArgs + "%" };
+            Cursor cursor = db.rawQuery("SELECT * FROM '" +  FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME +
+                    "' WHERE "+FeedReaderContract.FeedEntry.SOCIAL_CAT+"", selectionArgs);*/
 
             if (cursor.moveToFirst()) {
                 do {
-                    dbValues = dbValues + "\n"+"id==" + cursor.getString(0) + " , " + cursor.getString(1);
+                    dbValues = dbValues + "\n" + "id==" + cursor.getString(0) + " , " + cursor.getString(1);
                     SocialModel socialModel = new SocialModel
                             (Integer.parseInt(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID))),
-                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)),
-                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL)),
-                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD)),
-                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.SOCIAL_CAT)),
-                            cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE)));
+                                    cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)),
+                                    cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL)),
+                                    cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD)),
+                                    cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.SOCIAL_CAT)),
+                                    cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE)));
                     result.add(socialModel);
                     Log.e("dbValues", "====" + dbValues);
-                 } while (cursor.moveToNext());
+                } while (cursor.moveToNext());
             }
 
             cursor.close();
             db.close();
 
         } catch (Exception e) {
-            Log.e("Database helper", "Incorrect master key"+e);
+            Log.e("Database helper", "Incorrect master key" + e);
         }
 
 
@@ -314,19 +321,42 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         values.put(FeedReaderContract.FeedEntry.SOCIAL_CAT, categoty);
         if (!notes.isEmpty()) {
             values.put(FeedReaderContract.FeedEntry.EMAIL_TABLE_NOTE, notes);
-            if (id!=0) {
+            if (id != 0) {
                 values.put(FeedReaderContract.FeedEntry._ID, id);
             }
         }
         long res = 0;
-        if (id!=0) {
+        if (id != 0) {
             res = db.update(FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME, values, FeedReaderContract.FeedEntry._ID + "=" + id, null);
         } else {
             res = db.insertOrThrow(FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME, null, values);
 
         }
-        Log.e("inserted","id"+res);
+        Log.e("inserted", "id" + res);
         return (int) res;
+    }
+
+    public ArrayList<EmailPassModel> getAllSocialEmails(String cat) {
+        ArrayList<EmailPassModel> result = new ArrayList<>();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase(master_pass);
+            Log.e("cat", cat + "==");
+            Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + "' WHERE " + FeedReaderContract.FeedEntry.SOCIAL_CAT + "='" + cat + "';", null);
+            String dbValues = "";
+            if (cursor.moveToFirst()) {
+                do {
+                    // dbValues = dbValues + "\n" + "id==" + cursor.getString(0) + " , " + cursor.getString(1);
+                    EmailPassModel emailPassModel = new EmailPassModel(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE)), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL)), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD)));
+                    result.add(emailPassModel);
+                    Log.e("dbValues", "====" + dbValues);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            Log.e("Database helper", "Incorrect master key" + e);
+        }
+        return result;
     }
 }
 

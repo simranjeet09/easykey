@@ -21,7 +21,7 @@ public class SocialFormDetails extends BaseActivity {
     TextView save, tool_title;
     SocialModel model = null;
     boolean isEdit = false;
-    int  id = 0;
+    int id = 0;
     String category = "";
 
     @Override
@@ -35,7 +35,6 @@ public class SocialFormDetails extends BaseActivity {
         notes = findViewById(R.id.notes);
 
 
-
         if (getIntent().hasExtra("data")) {
             isEdit = true;
             findViewById(R.id.delete).setVisibility(View.VISIBLE);
@@ -44,7 +43,8 @@ public class SocialFormDetails extends BaseActivity {
             category = getIntent().getStringExtra("cat");
         }
         tool_title.setText(getIntent().getStringExtra("cat"));
-        if (isEdit) { ;
+        if (isEdit) {
+
             model = (SocialModel) getIntent().getSerializableExtra("data");
             id = model.getId();
             category = model.getCat();
@@ -67,10 +67,11 @@ public class SocialFormDetails extends BaseActivity {
             int result = getdbIbstance().insertSocialVals(model.getId(), title.getText().toString(), email.getText().toString(), password.getText().toString(), notes.getText().toString(), category);
             if (result > 0) {
                 setResult(RESULT_OK);
-
                 Toast.makeText(context, "Saved Successfully", Toast.LENGTH_SHORT).show();
+                finish();
             }
         } else {
+
             if (title.getText().toString().isEmpty()) {
                 title.setError("Required");
             } else if (email.getText().toString().isEmpty()) {
@@ -81,13 +82,12 @@ public class SocialFormDetails extends BaseActivity {
                 int result = getdbIbstance().insertSocialVals(0, title.getText().toString(), email.getText().toString(), password.getText().toString(), notes.getText().toString(), category);
                 if (result > 0) {
                     setResult(RESULT_OK);
-
                     Toast.makeText(context, "Saved Successfully", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
-        }
-     //   finish();
 
+        }
     }
 
     public void handleDelete(View view) {

@@ -38,8 +38,9 @@ public class AddCatActivity extends BaseActivity {
         SQLiteDatabase.loadLibs(context);
         cat_rv.setLayoutManager(new LinearLayoutManager(context));
         //   data = new FeedReaderDbHelper(getActivity()).getCategories(appSession.getMasterPassword());
-
-        categoryAdapter = new DataAdapter(context, getCategories(),true,getdbIbstance());
+        ArrayList<CatM> getCategories = getCategories();
+          getCategories.remove(0);
+        categoryAdapter = new DataAdapter(context, getCategories,true,getdbIbstance());
         cat_rv.setAdapter(categoryAdapter);
         if (categoryAdapter.getItemCount()<=0){
             add_Cat.setVisibility(View.VISIBLE);

@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
         SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase(pass);
         ContentValues V1 = new ContentValues();
         V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, "social");
-        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Password");
+        V1.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Social Network");
         if (feedReaderDbHelper.doesNotExist("Password")) {
             long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V1);
             ContentValues cvPass = new ContentValues();

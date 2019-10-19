@@ -48,7 +48,8 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/facebook" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -58,8 +59,8 @@
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/layout_padding"
                     android:onClick="handleFacebook"
+                    android:padding="@dimen/layout_padding"
                     android:text="Facebook"
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_17sp" />
@@ -76,7 +77,8 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/twitter" />
 
                 <TextView
                     android:id="@+id/twitter"
@@ -86,8 +88,8 @@
                     android:drawableRight="@drawable/eye_"
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
-                    android:onClick="handleTwitter"
                     android:gravity="center_vertical"
+                    android:onClick="handleTwitter"
                     android:padding="@dimen/layout_padding"
                     android:text="Twitter"
                     android:textColor="@color/black"
@@ -105,7 +107,8 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/instagram" />
 
                 <TextView
                     android:id="@+id/instagram"
@@ -116,9 +119,9 @@
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
                     android:gravity="center_vertical"
+                    android:onClick="handleInstagram"
                     android:padding="@dimen/layout_padding"
                     android:text="Instagram"
-                    android:onClick="handleInstagram"
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_17sp" />
 
@@ -134,7 +137,9 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/skype" />
+
 
                 <TextView
                     android:id="@+id/skype"
@@ -152,6 +157,7 @@
                     android:textSize="@dimen/txt_17sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,7 +168,9 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/viber" />
+
 
                 <TextView
                     android:id="@+id/viber"
@@ -173,24 +181,28 @@
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
                     android:gravity="center_vertical"
+                    android:onClick="handleViber"
                     android:padding="@dimen/layout_padding"
                     android:text="Viber"
-                    android:onClick="handleViber"
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_17sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:orientation="horizontal">
 
+
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/snapchat" />
+
 
                 <TextView
                     android:id="@+id/snapchat"
@@ -201,24 +213,28 @@
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
                     android:gravity="center_vertical"
+                    android:onClick="handleSnapchat"
                     android:padding="@dimen/layout_padding"
                     android:text="Snapchat"
-                    android:onClick="handleSnapchat"
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_17sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:orientation="horizontal">
 
+
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/pinetrest" />
+
 
                 <TextView
                     android:id="@+id/pinterest"
@@ -229,24 +245,28 @@
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
                     android:gravity="center_vertical"
+                    android:onClick="handlePinterest"
                     android:padding="@dimen/layout_padding"
                     android:text="Pinterest"
-                    android:onClick="handlePinterest"
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_17sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:orientation="horizontal">
 
+
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
+                    android:padding="15dp"
+                    android:src="@drawable/other" />
+
 
                 <TextView
                     android:id="@+id/other"
@@ -257,9 +277,9 @@
                     android:drawablePadding="@dimen/margin_20dp"
                     android:fontFamily="@font/med"
                     android:gravity="center_vertical"
+                    android:onClick="handleOther"
                     android:padding="@dimen/layout_padding"
                     android:text="Other"
-                    android:onClick="handleOther"
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_17sp" />
 

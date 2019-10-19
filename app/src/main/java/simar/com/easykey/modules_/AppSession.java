@@ -11,6 +11,7 @@ public class AppSession {
     private static final String MASTER_PASSWORD = "simar.com.easykey";
     private static final String MASTER_PASSWORD_SET = "simar.com.easykey_SET";
     private static final String IS_FIRST_RUN = "simar.com.easykey_first_run";
+    private static final String IS_FIRST_RUN_ACCESS = "simar.com.easykey_first_check";
     private static final String KEY_PIN = "pin";
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedpreferences;
@@ -41,9 +42,16 @@ public class AppSession {
     public boolean getIsFirstRun(){
         return sharedpreferences.getBoolean(IS_FIRST_RUN,true);
     }
+    public boolean getIsFirstAccess(){
+        return sharedpreferences.getBoolean(IS_FIRST_RUN_ACCESS,true);
+    }
 
     public void setIsFirstRun(){
         editor.putBoolean(IS_FIRST_RUN,false);
+        editor.commit();
+    }
+    public void setIsFirstRunAccess(){
+        editor.putBoolean(IS_FIRST_RUN_ACCESS,false);
         editor.commit();
     }
 
