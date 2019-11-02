@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#A7E255</color>
+    <color name="colorPrimaryDark">#599700</color>
     <color name="colorAccent">#00574B</color>
     <color name="text_numberpressed">#fff</color>
     <color name="text_title">#dcddde</color>
@@ -12,7 +12,9 @@
     <color name="dot_emptyborder">#87898C</color>
     <color name="transparent">#00000000</color>
     <color name="green_app">#A7E255</color>
-    <color name="white">#fff</color>
-    <color name="black">#000</color>
-    <color name="bg_clr">#f4fef1</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="bg_clr">#FFFFFF</color>
+    <color name="gray">#ccc</color>
+    <color name="grey_900">#ccc</color>
 </resources>

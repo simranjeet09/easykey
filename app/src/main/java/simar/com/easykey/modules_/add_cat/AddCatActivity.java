@@ -29,22 +29,26 @@ public class AddCatActivity extends BaseActivity {
     RecyclerView cat_rv;
     DataAdapter categoryAdapter;
     CardView add_Cat;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cat);
-        cat_rv=findViewById(R.id.cat_rv);
-        add_Cat=findViewById(R.id.add_Cat);
+        cat_rv = findViewById(R.id.cat_rv);
+        add_Cat = findViewById(R.id.add_Cat);
         SQLiteDatabase.loadLibs(context);
         cat_rv.setLayoutManager(new LinearLayoutManager(context));
         //   data = new FeedReaderDbHelper(getActivity()).getCategories(appSession.getMasterPassword());
         ArrayList<CatM> getCategories = getCategories();
-          getCategories.remove(0);
-        categoryAdapter = new DataAdapter(context, getCategories,true,getdbIbstance());
+        getCategories.remove(0);
+        getCategories.remove(0);
+        getCategories.remove(0);
+        getCategories.remove(0);
+        categoryAdapter = new DataAdapter(context, getCategories, true, getdbIbstance());
         cat_rv.setAdapter(categoryAdapter);
-        if (categoryAdapter.getItemCount()<=0){
+        if (categoryAdapter.getItemCount() <= 0) {
             add_Cat.setVisibility(View.VISIBLE);
-        }else {
+        } else {
 
             add_Cat.setVisibility(View.GONE);
 
@@ -66,8 +70,8 @@ public class AddCatActivity extends BaseActivity {
 
         ArrayList<CatM> data = new ArrayList<>();
         try {
-            FeedReaderDbHelper feedReaderDbHelper =getdbIbstance();
-            String pass =getSessionInstance().getMasterPassword();
+            FeedReaderDbHelper feedReaderDbHelper = getdbIbstance();
+            String pass = getSessionInstance().getMasterPassword();
             SQLiteDatabase db = feedReaderDbHelper.getWritableDatabase(pass);
             Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
             Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());
@@ -78,7 +82,7 @@ public class AddCatActivity extends BaseActivity {
                 do {
                     dbValues = dbValues + "\n" + cursor.getString(0) + " , " + cursor.getString(1);
                     Log.e("dbValues", "====" + dbValues);
-                    data.add(new CatM(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID )), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME )), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL))));
+                    data.add(new CatM(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID)), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME)), cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL))));
                 } while (cursor.moveToNext());
             }
 
@@ -96,7 +100,6 @@ public class AddCatActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
 
 
     }

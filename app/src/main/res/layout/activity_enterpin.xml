@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/dot_emptyborder"
+    android:background="@drawable/gradient"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
@@ -21,7 +21,7 @@
             android:layout_marginTop="@dimen/title_margintop"
             android:gravity="center"
             android:text="@string/pinlock_title"
-            android:textColor="@color/text_title"
+            android:textColor="@color/white"
             android:textSize="@dimen/textsize_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

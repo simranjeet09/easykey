@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- These options MUST be specified here in order for the events to be received on first
+ start in Android 4.1.1 -->
+<autofill-service
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="simar.com.easykey.services.MyAutofillService" />

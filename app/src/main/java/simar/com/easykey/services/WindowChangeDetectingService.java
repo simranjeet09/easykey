@@ -24,6 +24,8 @@ import simar.com.easykey.R;
 import simar.com.easykey.modules_.BReceiver;
 import simar.com.easykey.modules_.HomeScreen.AppHomeNavigation;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+
 public class WindowChangeDetectingService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
@@ -105,6 +107,7 @@ public class WindowChangeDetectingService extends AccessibilityService {
         Intent i = new Intent();
         i.setClassName(this, BReceiver.class.getName());
         i.setAction(aMessage);
+        i.putExtra("cat",aMessage);
         PendingIntent pendingIntent;
 
         if (aMessage.equals("Other")){
@@ -115,6 +118,16 @@ public class WindowChangeDetectingService extends AccessibilityService {
         if (notifManager == null) {
             notifManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
+        Intent snoozeIntent = new Intent(this, BReceiver.class);
+        snoozeIntent.setAction("add");
+        snoozeIntent.putExtra("cat",aMessage);
+        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 1);
+        PendingIntent snoozePendingIntent =
+                PendingIntent.getBroadcast(this, 1, snoozeIntent, 0);
+
+
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = notifManager.getNotificationChannel(id);
@@ -138,6 +151,8 @@ public class WindowChangeDetectingService extends AccessibilityService {
                     .setOngoing(true)
                     .setOnlyAlertOnce(true)
                     //.setTicker(aMessage)
+                    .addAction(R.drawable.ic_add_black_24dp, "Add New Password",
+                            snoozePendingIntent)
                     .setAutoCancel(false)
             /* .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})*/;
         } else {
@@ -154,6 +169,8 @@ public class WindowChangeDetectingService extends AccessibilityService {
                     .setOnlyAlertOnce(true)
                     .setOngoing(true)
                     .setAutoCancel(false)
+                    .addAction(R.drawable.ic_add_black_24dp, "Add New Password",
+                            snoozePendingIntent)
                     /*.setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})*/
                     .setPriority(Notification.PRIORITY_HIGH);
         }

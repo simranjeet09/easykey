@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Easy Key</string>
 
-    <string name="pinlock_title">Enter 4 digit key</string>
+    <string name="pinlock_title">enter 4 digit key</string>
     <string name="pinlock_settitle">Set Pin Code</string>
     <string name="pinlock_firsttry">Wrong Pin Code: First Try</string>
     <string name="pinlock_secondtry">Wrong Pin Code: Second Try</string>
-    <string name="pinlock_wrongpin">Wrong Pin code</string>
-    <string name="pinlock_secondPin">Enter Pin Code Again</string>
+    <string name="pinlock_wrongpin">Wrong Key</string>
+    <string name="pinlock_secondPin">Enter Key Again</string>
     <string name="pinlock_tryagain">Pin Codes Are Not The Same</string>
     <string name="pinlock_fingerprint">Use Fingerprint</string>
     <string name="title_activity_app_home_navigation">AppHomeNavigation</string>
@@ -22,7 +22,6 @@
     <string name="rate_us">Rate us</string>
     <string name="exit">Exit</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title">Title</string>
     <string name="name">Name</string>

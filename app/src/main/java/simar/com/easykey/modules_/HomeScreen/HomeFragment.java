@@ -113,6 +113,20 @@ public class HomeFragment extends Fragment {
 
         }
 
+        if (feedReaderDbHelper.doesNotExist("Email")) {
+            ContentValues V2 = new ContentValues();
+            V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, "email");
+            V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Emails");
+            long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V2);
+
+        } if (feedReaderDbHelper.doesNotExist("website")) {
+            ContentValues V2 = new ContentValues();
+            V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TABLE_NAME, "website");
+            V2.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL, "Website");
+            long id = db.insert(FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME, null, V2);
+
+        }
+
 
         Cursor cursor = db.rawQuery("SELECT * FROM '" + FeedReaderContract.FeedEntry.CATEGORY_TABLE_NAME + "';", null);
         Log.e(MainActivity.class.getSimpleName(), "Rows count: " + cursor.getCount());

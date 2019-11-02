@@ -13,6 +13,7 @@ public class SocialCatActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_cat);
+        showLockscreen();
     }
 
     public void handleClick(View view) {
@@ -21,7 +22,6 @@ public class SocialCatActivity extends BaseActivity {
 
     public void handleFacebook(View view) {
         goToNext("Facebook",SocialFormActivity.class);
-
     }
 
     public void handleTwitter(View view) {

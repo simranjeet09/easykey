@@ -43,6 +43,28 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.COLUMN_NAME_CAT_LABEL + TEXT_TYPE +
                     " )";
 
+    private static final String SQL_TBL_EMAIL =
+            "CREATE TABLE " + FeedReaderContract.FeedEntry.BASIC_EMAIL_TABLE_NAME + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE + TEXT_TYPE + "," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_LINK + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_EMAIL + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD + TEXT_TYPE +
+                    " )";
+    private static final String SQL_TBL_WEBSITE =
+            "CREATE TABLE " + FeedReaderContract.FeedEntry.WEBSITES_TABLE_NAME + " (" +
+                    FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_TITLE + TEXT_TYPE + "," +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_LINK + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_USERNAME + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.EMAIL_TABLE_PASSWORD + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_IP + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_PORT + TEXT_TYPE +
+                    FeedReaderContract.FeedEntry.WIFI_TABLE_DNS + TEXT_TYPE +
+                    " )";
+
+
+
     private static final String SQL_CREATE_EMAIL_CAT =
             "CREATE TABLE " + FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
@@ -78,7 +100,8 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_EMAIL_CAT);
         db.execSQL(SQL_CREATE_WIFI_CAT);
-        // db.execSQL(SQL_TABLE_COLOUMNS);
+        db.execSQL(SQL_TBL_EMAIL);
+        db.execSQL(SQL_TBL_WEBSITE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -271,6 +294,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(oldkey);
         db.rawExecSQL("BEGIN IMMEDIATE TRANSACTION;");
         db.rawExecSQL("PRAGMA rekey = '" + newKey + "';");
+
     }
 
     public ArrayList<SocialModel> getdataFromSocialTabel(String cat) {
@@ -333,6 +357,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
         }
         Log.e("inserted", "id" + res);
+        db.close();
         return (int) res;
     }
 
@@ -357,6 +382,21 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             Log.e("Database helper", "Incorrect master key" + e);
         }
         return result;
+    }
+
+
+    public boolean truncateTabel(String tbl) {
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
+        db.execSQL("delete from " + tbl);
+        db.close();
+        return true;
+    }
+
+    public boolean truncateTabelByCat(String cat) {
+        SQLiteDatabase db = this.getWritableDatabase(master_pass);
+        db.execSQL("delete from " +FeedReaderContract.FeedEntry.EMAIL_TABLE_NAME+ " where "+FeedReaderContract.FeedEntry.SOCIAL_CAT+"='"+cat +"'");
+        db.close();
+        return true;
     }
 }
 
